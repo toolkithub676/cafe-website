@@ -7,16 +7,12 @@ form.addEventListener("submit", function (e) {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
 
-    // Temporary Admin Login
+    console.log(email);
+    console.log(password);
+
     if (email === "admin@brewhaven.com" && password === "123456") {
-
-        alert("Login Successful!");
-
-        // Dashboard Page Open
         window.location.href = "dashboard.html";
-
     } else {
-
-        message.textContent = "❌ Invalid Email or Password";
+        message.textContent = "Invalid Email or Password";
     }
 });
