@@ -1,12 +1,62 @@
 import { db } from "../firebase.js";
 
-document.getElementById("productContainer").innerHTML = `
-<div class="card">
-  <img src="https://picsum.photos/300/200">
-  <h3>Working</h3>
-  <p>JavaScript is loading.</p>
-  <h4>₹100</h4>
-</div>
-`;
+import {
+  collection,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-console.log(db);
+const productContainer = document.getElementById("productContainer");
+
+async function loadProducts() {
+
+  productContainer.innerHTML = "<h3>Loading...</h3>";
+
+  try {
+
+    const snapshot = await getDocs(collection(db, "products"));
+
+    productContainer.innerHTML = "";
+
+    if (snapshot.empty) {
+      productContainer.innerHTML = "<h3>No Products Found</h3>";
+      return;
+    }
+
+    snapshot.forEach((doc) => {
+
+      const product = doc.data();
+
+      productContainer.innerHTML += `
+      <div class="card">
+
+        <img src="${product.image}" alt="${product.name}">
+
+        <h3>${product.name}</h3>
+
+        <p>${product.description}</p>
+
+        <h4>₹${product.price}</h4>
+
+        <button>Add To Cart</button>
+
+      </div>
+      `;
+
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    productContainer.innerHTML = `
+      <h3 style="color:red">
+        Error Loading Products
+      </h3>
+      <p>${error.message}</p>
+    `;
+
+  }
+
+}
+
+loadProducts();
