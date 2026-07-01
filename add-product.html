@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Product</title>
+
+<link rel="stylesheet" href="css/add-product.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Add New Product</h1>
+
+<form id="productForm">
+
+<input type="text" id="name" placeholder="Product Name" required>
+
+<textarea id="description" placeholder="Description" required></textarea>
+
+<input type="number" id="price" placeholder="Price" required>
+
+<select id="category">
+<option>Coffee</option>
+<option>Tea</option>
+<option>Cold Coffee</option>
+<option>Dessert</option>
+<option>Snacks</option>
+</select>
+
+<input type="file" id="image">
+
+<button type="submit">
+Save Product
+</button>
+
+</form>
+
+<p id="message"></p>
+
+</div>
+
+<script src="js/add-product.js"></script>
+
+</body>
+</html>
