@@ -8,7 +8,7 @@ form.addEventListener("submit", function(e) {
     const password = document.getElementById("password").value.trim();
 
     if (email === "admin@brewhaven.com" && password === "123456") {
-        window.location.href = "dashboard.html";
+        window.location.assign("./dashboard.html");
     } else {
         message.textContent = "Invalid Email or Password";
     }
