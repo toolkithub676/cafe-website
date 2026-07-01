@@ -28,7 +28,13 @@ form.addEventListener("submit", async (e) => {
 
         form.reset();
     } catch (error) {
-        console.error(error);
+    console.error(error);
+
+    alert(error.message);
+
+    message.style.color = "red";
+    message.textContent = error.message;
+}
 
         message.style.color = "red";
         message.textContent = "❌ Failed to save product!";
