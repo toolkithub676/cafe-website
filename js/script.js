@@ -33,3 +33,4 @@ async function loadProducts() {
 }
 
 loadProducts();
+alert("Script Loaded");
