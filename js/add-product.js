@@ -1,5 +1,4 @@
 import { db } from "../firebase.js";
-
 import {
   collection,
   addDoc
@@ -9,34 +8,29 @@ const form = document.getElementById("productForm");
 const message = document.getElementById("message");
 
 form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const product = {
-        name: document.getElementById("name").value.trim(),
-        description: document.getElementById("description").value.trim(),
-        price: Number(document.getElementById("price").value),
-        category: document.getElementById("category").value,
-        image: document.getElementById("image").value.trim(),
-        createdAt: new Date().toISOString()
-    };
+  const product = {
+    name: document.getElementById("name").value.trim(),
+    description: document.getElementById("description").value.trim(),
+    price: Number(document.getElementById("price").value),
+    category: document.getElementById("category").value,
+    image: document.getElementById("image").value.trim(),
+    createdAt: new Date().toISOString()
+  };
 
-    try {
-        await addDoc(collection(db, "products"), product);
+  try {
+    await addDoc(collection(db, "products"), product);
 
-        message.style.color = "green";
-        message.textContent = "✅ Product Added Successfully!";
+    message.style.color = "green";
+    message.textContent = "✅ Product Added Successfully!";
+    form.reset();
 
-        form.reset();
-    } catch (error) {
+  } catch (error) {
     console.error(error);
-
     alert(error.message);
 
     message.style.color = "red";
     message.textContent = error.message;
-}
-
-        message.style.color = "red";
-        message.textContent = "❌ Failed to save product!";
-    }
+  }
 });
