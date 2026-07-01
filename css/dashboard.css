@@ -55,3 +55,12 @@ body{
     border-radius:12px;
     box-shadow:0 5px 15px rgba(0,0,0,.2);
 }
+.sidebar a{
+    color:white;
+    text-decoration:none;
+    display:block;
+}
+
+.sidebar a:hover{
+    color:#FFD54F;
+}
