@@ -62,12 +62,10 @@ form.reset();
 
 }
 catch(error){
-
-console.error(error);
-
-message.style.color="red";
-
-message.innerHTML="❌ Failed";
+    console.error(error);
+    alert(error.message);
+    status.innerHTML = "❌ Failed";
+}
 
 }
 
