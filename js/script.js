@@ -8,35 +8,35 @@ import {
 const productContainer = document.getElementById("productContainer");
 
 async function loadProducts() {
-
+  try {
     productContainer.innerHTML = "";
 
-    const querySnapshot = await getDocs(collection(db, "products"));
+    const snapshot = await getDocs(collection(db, "products"));
 
-    querySnapshot.forEach((doc) => {
+    if (snapshot.empty) {
+      productContainer.innerHTML = "<h3>No Products Found</h3>";
+      return;
+    }
 
-        const product = doc.data();
+    snapshot.forEach((doc) => {
+      const product = doc.data();
 
-        productContainer.innerHTML += `
-
+      productContainer.innerHTML += `
         <div class="card">
-
-            <img src="${product.image}" alt="${product.name}">
-
-            <h3>${product.name}</h3>
-
-            <p>${product.description}</p>
-
-            <h4>₹${product.price}</h4>
-
-            <button>Add To Cart</button>
-
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>${product.description}</p>
+          <h4>₹${product.price}</h4>
+          <button>Add To Cart</button>
         </div>
-
-        `;
-
+      `;
     });
 
+  } catch (error) {
+    console.error(error);
+    productContainer.innerHTML =
+      "<h3 style='color:red'>Error: " + error.message + "</h3>";
+  }
 }
 
 loadProducts();
