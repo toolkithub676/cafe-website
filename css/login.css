@@ -1,0 +1,32 @@
+body{
+background:#f4f4f4;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+font-family:Arial,sans-serif;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+text-align:center;
+width:320px;
+}
+
+.btn{
+display:block;
+text-decoration:none;
+background:#5D4037;
+color:white;
+padding:14px;
+margin:15px 0;
+border-radius:8px;
+}
+
+.back{
+text-decoration:none;
+color:#5D4037;
+}
