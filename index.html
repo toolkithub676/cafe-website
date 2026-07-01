@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Brew Haven Café</title>
 
 <link rel="stylesheet" href="css/style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -21,19 +24,12 @@
 </div>
 
 <ul>
-
 <li><a href="#">Home</a></li>
-
 <li><a href="#">Menu</a></li>
-
 <li><a href="#">About</a></li>
-
 <li><a href="#">Contact</a></li>
-
-<a href="login.html">Login</a>
-
-<li><a href="#">Cart 🛒</a></li>
-
+<li><a href="login.html">Vendor Login</a></li>
+<li><a href="#">🛒 Cart</a></li>
 </ul>
 
 </nav>
@@ -58,43 +54,9 @@ Order Now
 
 <h2>Popular Items</h2>
 
-<div class="cards">
+<div class="cards" id="productContainer">
 
-<div class="card">
-
-<img src="images/coffee.jpg">
-
-<h3>Cappuccino</h3>
-
-<p>₹180</p>
-
-<button>Add To Cart</button>
-
-</div>
-
-<div class="card">
-
-<img src="images/burger.jpg">
-
-<h3>Cheese Burger</h3>
-
-<p>₹220</p>
-
-<button>Add To Cart</button>
-
-</div>
-
-<div class="card">
-
-<img src="images/pizza.jpg">
-
-<h3>Italian Pizza</h3>
-
-<p>₹350</p>
-
-<button>Add To Cart</button>
-
-</div>
+<!-- Firestore Products Automatically Show Here -->
 
 </div>
 
@@ -103,14 +65,12 @@ Order Now
 <footer>
 
 <p>
-
 ©2026 Brew Haven Café
-
 </p>
 
 </footer>
 
-<script src="js/script.js"></script>
+<script type="module" src="js/script.js"></script>
 
 </body>
 
