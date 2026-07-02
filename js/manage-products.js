@@ -1,27 +1,52 @@
-import { db } from "../firebase.js";
+import { db, auth } from "../firebase.js";
 
 import {
 collection,
+query,
+where,
 getDocs,
 deleteDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-const productsDiv=document.getElementById("products");
+const productsDiv = document.getElementById("products");
 
-async function loadProducts(){
+async function loadProducts() {
 
-productsDiv.innerHTML="Loading Products...";
+if (!auth.currentUser) {
 
-const snapshot=await getDocs(collection(db,"products"));
+alert("Please login first.");
 
-productsDiv.innerHTML="";
+window.location.href = "vendor-login.html";
 
-snapshot.forEach((productDoc)=>{
+return;
 
-const product=productDoc.data();
+}
 
-productsDiv.innerHTML+=`
+productsDiv.innerHTML = "Loading Products...";
+
+const q = query(
+collection(db, "products"),
+where("vendorId", "==", auth.currentUser.uid)
+);
+
+const snapshot = await getDocs(q);
+
+productsDiv.innerHTML = "";
+
+if (snapshot.empty) {
+
+productsDiv.innerHTML = "<h3>No Products Added Yet</h3>";
+
+return;
+
+}
+
+snapshot.forEach((productDoc) => {
+
+const product = productDoc.data();
+
+productsDiv.innerHTML += `
 
 <div class="card">
 
@@ -49,16 +74,16 @@ productsDiv.innerHTML+=`
 
 }
 
-window.deleteProduct=async(id)=>{
+window.deleteProduct = async (id) => {
 
-if(confirm("Delete this product?")){
+if (confirm("Delete this product?")) {
 
-await deleteDoc(doc(db,"products",id));
+await deleteDoc(doc(db, "products", id));
 
 loadProducts();
 
 }
 
-}
+};
 
 loadProducts();
