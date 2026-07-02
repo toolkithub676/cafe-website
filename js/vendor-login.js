@@ -22,7 +22,7 @@ form.addEventListener("submit", async (e) => {
         message.innerHTML = "✅ Login Successful";
 
         setTimeout(() => {
-            window.location.href = ".vendor/vendor-dashboard.html";
+            window.location.href = "vendor-dashboard.html";
         }, 1000);
 
     } catch (error) {
