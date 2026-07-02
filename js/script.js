@@ -7,6 +7,27 @@ import {
 
 const productContainer = document.getElementById("productContainer");
 
+// ======================
+// Mobile Menu
+// ======================
+
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.getElementById("navMenu");
+
+if (menuToggle && navMenu) {
+
+  menuToggle.addEventListener("click", () => {
+
+    navMenu.classList.toggle("active");
+
+  });
+
+}
+
+// ======================
+// Load Products
+// ======================
+
 async function loadProducts() {
 
   productContainer.innerHTML = "<h3>Loading...</h3>";
@@ -18,8 +39,11 @@ async function loadProducts() {
     productContainer.innerHTML = "";
 
     if (snapshot.empty) {
+
       productContainer.innerHTML = "<h3>No Products Found</h3>";
+
       return;
+
     }
 
     snapshot.forEach((doc) => {
@@ -27,6 +51,7 @@ async function loadProducts() {
       const product = doc.data();
 
       productContainer.innerHTML += `
+
       <div class="card">
 
         <img src="${product.image}" alt="${product.name}">
@@ -40,6 +65,7 @@ async function loadProducts() {
         <button>Add To Cart</button>
 
       </div>
+
       `;
 
     });
@@ -49,9 +75,7 @@ async function loadProducts() {
     console.error(error);
 
     productContainer.innerHTML = `
-      <h3 style="color:red">
-        Error Loading Products
-      </h3>
+      <h3 style="color:red;">Error Loading Products</h3>
       <p>${error.message}</p>
     `;
 
