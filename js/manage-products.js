@@ -49,7 +49,10 @@ async function loadProducts(uid) {
         <h3>₹${product.price}</h3>
 
         <div class="buttons">
-          <button class="edit">Edit</button>
+          <button class="edit"
+onclick="window.location.href='edit-product.html?id=${productDoc.id}'">
+Edit
+</button>
 
           <button class="delete"
             onclick="deleteProduct('${productDoc.id}')">
