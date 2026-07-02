@@ -99,7 +99,7 @@ body{
 
     ),
 
-    url("cafe.jpg");
+    url("../cafe.jpg");
 
     background-size:cover;
 
