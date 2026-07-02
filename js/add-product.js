@@ -1,4 +1,4 @@
-import { db } from "../firebase.js";
+import { db, auth } from "../firebase.js";
 
 import {
   collection,
@@ -11,6 +11,12 @@ const message = document.getElementById("message");
 form.addEventListener("submit", async (e) => {
 
   e.preventDefault();
+
+  if (!auth.currentUser) {
+    alert("Please login first.");
+    window.location.href = "vendor-login.html";
+    return;
+  }
 
   message.style.color = "green";
   message.innerHTML = "Uploading Image...";
@@ -40,20 +46,28 @@ form.addEventListener("submit", async (e) => {
 
     const imageData = await upload.json();
 
-    // DEBUG
-    alert(JSON.stringify(imageData));
-
     if (!imageData.secure_url) {
       throw new Error(imageData.error?.message || "Image upload failed");
     }
 
     const product = {
+
       name: document.getElementById("name").value.trim(),
+
       description: document.getElementById("description").value.trim(),
+
       price: Number(document.getElementById("price").value),
+
       category: document.getElementById("category").value,
+
       image: imageData.secure_url,
+
+      vendorId: auth.currentUser.uid,
+
+      vendorEmail: auth.currentUser.email,
+
       createdAt: new Date().toISOString()
+
     };
 
     await addDoc(collection(db, "products"), product);
