@@ -27,8 +27,8 @@
 
 <h1>Customer Login</h1>
 
-<p>
-Login to order your favourite coffee & snacks.
+<p class="subtitle">
+Welcome back! Login to order your favourite coffee & snacks.
 </p>
 
 <form id="loginForm">
@@ -39,11 +39,37 @@ id="email"
 placeholder="Email Address"
 required>
 
+<div class="password-box">
+
 <input
 type="password"
 id="password"
 placeholder="Password"
 required>
+
+<span id="togglePassword" class="toggle-password">
+👁️
+</span>
+
+</div>
+
+<div class="remember-row">
+
+<label>
+
+<input type="checkbox" id="rememberMe">
+
+Remember Me
+
+</label>
+
+<a href="#" id="forgotPassword">
+
+Forgot Password?
+
+</a>
+
+</div>
 
 <button type="submit">
 
@@ -54,6 +80,31 @@ Login
 </form>
 
 <p id="message"></p>
+
+<div class="divider">
+
+<span>OR</span>
+
+</div>
+
+<button
+type="button"
+class="google-btn"
+id="googleLogin">
+
+<img
+src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+alt="Google">
+
+Continue with Google
+
+</button>
+
+<p class="firebase-text">
+
+🔒 Secure Login powered by Firebase
+
+</p>
 
 <div class="bottom-text">
 
