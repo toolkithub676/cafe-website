@@ -794,3 +794,170 @@ html{
 scroll-behavior:smooth;
 
 }
+/* ===========================
+      PROFILE DROPDOWN
+=========================== */
+
+#accountArea{
+    position:relative;
+}
+
+.profile-dropdown{
+
+    position:absolute;
+
+    top:60px;
+
+    right:0;
+
+    width:280px;
+
+    background:white;
+
+    border-radius:15px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+
+    overflow:hidden;
+
+    display:none;
+
+    z-index:9999;
+
+}
+
+.profile-dropdown.show{
+
+    display:block;
+
+    animation:dropdown .25s ease;
+
+}
+
+.profile-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:18px;
+
+    background:#f7f7f7;
+
+}
+
+.profile-avatar{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    background:#6F4E37;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:24px;
+
+}
+
+.profile-header h3{
+
+    font-size:18px;
+
+    color:#3E2723;
+
+}
+
+.profile-header p{
+
+    font-size:13px;
+
+    color:#777;
+
+}
+
+.profile-dropdown hr{
+
+    border:none;
+
+    border-top:1px solid #eee;
+
+}
+
+.profile-dropdown a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:15px 18px;
+
+    color:#333;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+    font-size:15px;
+
+}
+
+.profile-dropdown a:hover{
+
+    background:#f5f5f5;
+
+    color:#6F4E37;
+
+}
+
+@keyframes dropdown{
+
+from{
+
+opacity:0;
+
+transform:translateY(-10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+.profile-dropdown{
+
+position:static;
+
+width:100%;
+
+margin-top:10px;
+
+box-shadow:none;
+
+border-radius:10px;
+
+}
+
+}
