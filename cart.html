@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Cart | Brew Haven</title>
+
+<link rel="stylesheet" href="css/cart.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+<nav class="navbar">
+
+<div class="logo">
+
+☕ Brew Haven
+
+</div>
+
+<a href="menu.html" class="back-btn">
+
+← Continue Shopping
+
+</a>
+
+</nav>
+
+</header>
+
+<section class="cart-page">
+
+<h1>
+
+🛒 My Cart
+
+</h1>
+
+<div id="cartContainer">
+
+<!-- Cart Items Here -->
+
+</div>
+
+<div class="cart-summary">
+
+<h2>
+
+Order Summary
+
+</h2>
+
+<div class="summary-row">
+
+<span>
+
+Items
+
+</span>
+
+<span id="totalItems">
+
+0
+
+</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>
+
+Subtotal
+
+</span>
+
+<span id="subtotal">
+
+₹0
+
+</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>
+
+Delivery
+
+</span>
+
+<span id="delivery">
+
+₹40
+
+</span>
+
+</div>
+
+<div class="summary-row total">
+
+<span>
+
+Grand Total
+
+</span>
+
+<span id="grandTotal">
+
+₹40
+
+</span>
+
+</div>
+
+<button id="checkoutBtn">
+
+💳 Proceed To Checkout
+
+</button>
+
+</div>
+
+</section>
+<div id="emptyCart" class="empty-cart" style="display:none;">
+
+    <img
+    src="images/icons/empty-cart.png"
+    alt="Empty Cart">
+
+    <h2>Your Cart is Empty</h2>
+
+    <p>
+
+        Looks like you haven't added anything yet.
+
+    </p>
+
+    <a href="menu.html">
+
+        <button>
+
+            ☕ Explore Menu
+
+        </button>
+
+    </a>
+
+</div>
+
+<div id="loginRequired" class="empty-cart" style="display:none;">
+
+    <h2>
+
+        🔒 Login Required
+
+    </h2>
+
+    <p>
+
+        Please login to view your cart.
+
+    </p>
+
+    <a href="customer-login.html?redirect=cart">
+
+        <button>
+
+            👤 Login
+
+        </button>
+
+    </a>
+
+</div>
+
+<footer>
+
+<p>
+
+© 2026 Brew Haven Café. All Rights Reserved.
+
+</p>
+
+</footer>
+
+<script type="module" src="js/cart.js"></script>
+
+</body>
+
+</html>
