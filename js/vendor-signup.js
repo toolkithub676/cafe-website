@@ -1,51 +1,114 @@
+/*
+====================================
+Brew Haven
+Become a Vendor
+Version 3.0
+====================================
+*/
+
 import { auth, db } from "../firebase.js";
 
 import {
-createUserWithEmailAndPassword
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
-doc,
-setDoc
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const form = document.getElementById("signupForm");
 const message = document.getElementById("message");
 
-form.addEventListener("submit", async (e) => {
+let currentUser = null;
 
-e.preventDefault();
+onAuthStateChanged(auth, (user) => {
 
-const name = document.getElementById("name").value.trim();
-const email = document.getElementById("email").value.trim();
-const password = document.getElementById("password").value;
+    if (!user) {
 
-try {
+        window.location.href = "customer-login.html";
+        return;
 
-const userCredential = await createUserWithEmailAndPassword(
-auth,
-email,
-password
-);
+    }
 
-await setDoc(doc(db, "vendors", userCredential.user.uid), {
-
-name: name,
-email: email,
-createdAt: new Date().toISOString()
+    currentUser = user;
 
 });
 
-message.style.color = "green";
-message.innerHTML = "✅ Vendor Account Created Successfully";
+form.addEventListener("submit", async (e) => {
 
-form.reset();
+    e.preventDefault();
 
-} catch (error) {
+    const shopName = document.getElementById("shopName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const category = document.getElementById("category").value.trim();
+    const description = document.getElementById("description").value.trim();
 
-message.style.color = "red";
-message.innerHTML = error.message;
+    try {
 
-}
+        const userRef = doc(db, "users", currentUser.uid);
+
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+
+            message.style.color = "red";
+            message.innerHTML = "User profile not found.";
+
+            return;
+
+        }
+
+        await updateDoc(userRef, {
+
+            isVendor: true
+
+        });
+
+        await setDoc(doc(db, "vendors", currentUser.uid), {
+
+            uid: currentUser.uid,
+
+            shopName,
+
+            phone,
+
+            address,
+
+            category,
+
+            description,
+
+            email: currentUser.email,
+
+            ownerName: userSnap.data().name,
+
+            createdAt: serverTimestamp(),
+
+            status: "active"
+
+        });
+
+        message.style.color = "lightgreen";
+
+        message.innerHTML = "✅ Vendor Registration Successful";
+
+        setTimeout(() => {
+
+            window.location.href = "vendor-dashboard.html";
+
+        }, 1000);
+
+    } catch (error) {
+
+        message.style.color = "red";
+
+        message.innerHTML = error.message;
+
+    }
 
 });
