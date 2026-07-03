@@ -6,9 +6,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Vendor Signup</title>
+<title>Become a Vendor | Brew Haven</title>
 
 <link rel="stylesheet" href="css/vendor-signup.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -16,42 +18,88 @@
 
 <div class="container">
 
-<h2>Create Vendor Account</h2>
+<div class="card">
+
+<div class="icon">
+🏪
+</div>
+
+<h2>Become a Vendor</h2>
+
+<p class="subtitle">
+Start selling your coffee, tea and delicious snacks on Brew Haven.
+</p>
 
 <form id="signupForm">
 
 <input
 type="text"
-id="name"
-placeholder="Vendor Name"
+id="shopName"
+placeholder="Shop Name"
 required>
 
 <input
-type="email"
-id="email"
-placeholder="Email"
+type="tel"
+id="phone"
+placeholder="Business Phone"
 required>
 
 <input
-type="password"
-id="password"
-placeholder="Password"
+type="text"
+id="address"
+placeholder="Business Address"
 required>
+
+<select id="category" required>
+
+<option value="">Select Food Category</option>
+
+<option>Coffee</option>
+
+<option>Tea</option>
+
+<option>Snacks</option>
+
+<option>Bakery</option>
+
+<option>Desserts</option>
+
+<option>Fast Food</option>
+
+<option>Restaurant</option>
+
+</select>
+
+<textarea
+id="description"
+rows="4"
+placeholder="Tell customers about your business..."
+required>
+</textarea>
 
 <button type="submit">
-Create Account
+
+🚀 Become a Vendor
+
 </button>
 
 </form>
 
-<p>
-Already have an account?
-<a href="vendor-login.html">
-Login Here
-</a>
-</p>
-
 <p id="message"></p>
+
+<div class="bottom-text">
+
+Already a Vendor?
+
+<a href="vendor-login.html">
+
+Login Here
+
+</a>
+
+</div>
+
+</div>
 
 </div>
 
