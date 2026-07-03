@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Customer Account | Brew Haven</title>
+
+<link rel="stylesheet" href="css/customer-signup.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="signup-container">
+
+<div class="signup-card">
+
+<div class="icon">
+☕
+</div>
+
+<h1>Create Account</h1>
+
+<p class="subtitle">
+
+Join Brew Haven and order your favourite food anytime.
+
+</p>
+
+<form id="signupForm">
+
+<input
+type="text"
+id="name"
+placeholder="Full Name"
+required>
+
+<input
+type="email"
+id="email"
+placeholder="Email Address"
+required>
+
+<input
+type="tel"
+id="phone"
+placeholder="Mobile Number"
+required>
+
+<div class="password-box">
+
+<input
+type="password"
+id="password"
+placeholder="Password"
+required>
+
+<span id="togglePassword">
+👁️
+</span>
+
+</div>
+
+<div class="password-box">
+
+<input
+type="password"
+id="confirmPassword"
+placeholder="Confirm Password"
+required>
+
+<span id="toggleConfirmPassword">
+👁️
+</span>
+
+</div>
+
+<label class="terms">
+
+<input
+type="checkbox"
+id="terms"
+required>
+
+I agree to the Terms & Conditions
+
+</label>
+
+<button type="submit">
+
+Create Account
+
+</button>
+
+</form>
+
+<p id="message"></p>
+
+<div class="divider">
+
+<span>OR</span>
+
+</div>
+
+<button
+type="button"
+class="google-btn"
+id="googleSignup">
+
+<img
+src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+
+Continue with Google
+
+</button>
+
+<p class="firebase-text">
+
+🔒 Secure Signup powered by Firebase
+
+</p>
+
+<div class="bottom-text">
+
+Already have an account?
+
+<a href="customer-login.html">
+
+Login
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module" src="js/customer-signup.js"></script>
+
+</body>
+
+</html>
