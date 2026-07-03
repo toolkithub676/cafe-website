@@ -301,28 +301,47 @@ async function loadRelatedProducts() {
 
         const snapshot = await getDocs(q);
 
-        relatedContainer.innerHTML = "";
+        relatedContainer.innerHTML += `
 
-        snapshot.forEach((docSnap) => {
+<div class="card"
+onclick="location.href='product.html?id=${docSnap.id}'">
 
-            if (docSnap.id === productId) return;
+    <img src="${product.image}" alt="${product.name}">
 
-            const product = docSnap.data();
+    <h3>${product.name}</h3>
 
-            relatedContainer.innerHTML += `
+    <h4>₹${product.price}</h4>
 
-            <div class="card"
-            onclick="location.href='product.html?id=${docSnap.id}'">
+    <button
+    onclick="event.stopPropagation();window.addToCart({
 
-                <img src="${product.image}" alt="${product.name}">
+        productId:'${docSnap.id}',
 
-                <h3>${product.name}</h3>
+        vendorId:'${product.vendorId}',
 
-                <h4>₹${product.price}</h4>
+        shopName:'${product.shopName}',
 
-            </div>
+        category:'${product.category}',
 
-            `;
+        name:'${product.name}',
+
+        image:'${product.image}',
+
+        price:${product.price},
+
+        stock:${product.stock},
+
+        preparationTime:${product.preparationTime}
+
+    },1);">
+
+    🛒 Add To Cart
+
+    </button>
+
+</div>
+
+`;
 
         });
 
