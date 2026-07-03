@@ -19,6 +19,7 @@ import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import "./cart.js";
 
 // ======================
 // Elements
@@ -210,10 +211,30 @@ async function loadProducts() {
 
                 <h4>₹${product.price}</h4>
 
-                <button class="add-cart"
-                    data-id="${productDoc.id}">
-                    Add To Cart
-                </button>
+                <button
+class="add-cart"
+
+data-id="${productDoc.id}"
+
+data-vendor="${product.vendorId}"
+
+data-shop="${product.shopName}"
+
+data-category="${product.category}"
+
+data-name="${product.name}"
+
+data-image="${product.image}"
+
+data-price="${product.price}"
+
+data-stock="${product.stock}"
+
+data-prep="${product.preparationTime}">
+
+🛒 Add To Cart
+
+</button>
 
             </div>
 
@@ -242,12 +263,32 @@ loadProducts();
 // Future Cart Placeholder
 // ======================
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
 
-    if (e.target.classList.contains("add-cart")) {
+    if (!e.target.classList.contains("add-cart")) return;
 
-        alert("Cart System Coming Soon 🛒");
+    await window.addToCart({
 
-    }
+        productId: e.target.dataset.id,
+
+        vendorId: e.target.dataset.vendor,
+
+        shopName: e.target.dataset.shop,
+
+        category: e.target.dataset.category,
+
+        name: e.target.dataset.name,
+
+        image: e.target.dataset.image,
+
+        price: Number(e.target.dataset.price),
+
+        stock: Number(e.target.dataset.stock),
+
+        preparationTime: Number(e.target.dataset.prep)
+
+    },1);
+
+});
 
 });
