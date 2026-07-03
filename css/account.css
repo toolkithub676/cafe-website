@@ -1,0 +1,110 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url("../cafe.jpg");
+    background-size:cover;
+    background-position:center;
+}
+
+.container{
+    width:100%;
+    max-width:1100px;
+    text-align:center;
+}
+
+.container h1{
+    color:#fff;
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#eee;
+    font-size:18px;
+    margin-bottom:40px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:20px;
+    padding:35px 30px;
+    transition:.35s;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    background:rgba(255,255,255,.18);
+}
+
+.icon{
+    font-size:70px;
+    margin-bottom:15px;
+}
+
+.card h2{
+    color:#fff;
+    margin-bottom:15px;
+}
+
+.card p{
+    color:#f2f2f2;
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+.card button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#6F4E37;
+    color:#fff;
+    font-size:17px;
+    cursor:pointer;
+    transition:.3s;
+    font-weight:600;
+}
+
+.card button:hover{
+    background:#8B5E3C;
+}
+
+@media(max-width:768px){
+
+.container h1{
+    font-size:32px;
+}
+
+.subtitle{
+    font-size:16px;
+}
+
+.card{
+    padding:25px;
+}
+
+.icon{
+    font-size:55px;
+}
+
+}
