@@ -8,14 +8,7 @@ Version 1.0
 
 import { db, auth } from "../firebase.js";
 
-import {
-    doc,
-    getDoc,
-    setDoc,
-    updateDoc,
-    deleteDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+ from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
     onAuthStateChanged
@@ -153,11 +146,45 @@ function renderCart(){
 
 <p>₹${item.price}</p>
 
-<p>⏱ ${item.preparationTime} mins</
+<p>⏱ ${item.preparationTime} mins</p>
 
-window.increaseQuantity = increaseQuantity;
-window.decreaseQuantity = decreaseQuantity;
-window.removeItem = removeItem;
+<div class="quantity-controls">
+
+<button onclick="decreaseQuantity(${index})">-</button>
+
+<span>${item.quantity}</span>
+
+<button onclick="increaseQuantity(${index})">+</button>
+
+</div>
+
+<button
+class="remove-btn"
+onclick="removeItem(${index})">
+
+Remove
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+totalItems.innerHTML=itemCount;
+
+subtotal.innerHTML=`₹${total}`;
+
+delivery.innerHTML=`₹${DELIVERY_CHARGE}`;
+
+grandTotal.innerHTML=`₹${total+DELIVERY_CHARGE}`;
+
+}
+
+
 /* ==========================
     INCREASE QUANTITY
 ========================== */
