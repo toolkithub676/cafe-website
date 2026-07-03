@@ -2,49 +2,123 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product</title>
 
-  <link rel="stylesheet" href="css/add-product.css">
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Product | Brew Haven</title>
+
+<link rel="stylesheet" href="css/add-product.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>Add Product</h1>
+<div class="card">
+
+<h1>🍔 Add New Product</h1>
+
+<p class="subtitle">
+
+Add your food item to Brew Haven.
+
+</p>
 
 <form id="productForm">
+
+<label>Product Name</label>
 
 <input
 type="text"
 id="name"
-placeholder="Product Name"
+placeholder="Example : Cold Coffee Large"
 required>
+
+<label>Description</label>
 
 <textarea
 id="description"
-placeholder="Description"
-required></textarea>
+placeholder="Write product description..."
+required>
+</textarea>
+
+<label>Category</label>
+
+<select id="category" required>
+
+<option value="">Select Category</option>
+
+<option>Coffee</option>
+
+<option>Cold Coffee</option>
+
+<option>Tea</option>
+
+<option>Pizza</option>
+
+<option>Burger</option>
+
+<option>Sandwich</option>
+
+<option>Bakery</option>
+
+<option>Dessert</option>
+
+<option>Beverages</option>
+
+</select>
+
+<label>Price (₹)</label>
 
 <input
 type="number"
 id="price"
-placeholder="Price"
+placeholder="Enter Price"
+min="1"
 required>
 
-<select id="category">
+<label>Available Stock</label>
 
-<option>Coffee</option>
-<option>Tea</option>
-<option>Cold Coffee</option>
-<option>Dessert</option>
-<option>Snacks</option>
+<input
+type="number"
+id="stock"
+placeholder="Example : 25"
+min="0"
+required>
+
+<label>Preparation Time (Minutes)</label>
+
+<input
+type="number"
+id="preparationTime"
+placeholder="Example : 10"
+min="1"
+required>
+
+<label>Availability</label>
+
+<select id="available">
+
+<option value="true">
+
+✅ Available
+
+</option>
+
+<option value="false">
+
+❌ Out Of Stock
+
+</option>
 
 </select>
 
-<label>Select Product Image</label>
+<label>Product Image</label>
 
 <input
 type="file"
@@ -53,7 +127,9 @@ accept="image/*"
 required>
 
 <button type="submit">
-Save Product
+
+➕ Save Product
+
 </button>
 
 </form>
@@ -62,7 +138,10 @@ Save Product
 
 </div>
 
+</div>
+
 <script type="module" src="js/add-product.js"></script>
 
 </body>
+
 </html>
