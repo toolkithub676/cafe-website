@@ -1,70 +1,122 @@
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
 }
 
 body{
-background:#f4f4f4;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:
+    linear-gradient(rgba(0,0,0,.60),rgba(0,0,0,.60)),
+    url("../cafe.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
 }
 
 .container{
-width:90%;
-max-width:400px;
-background:#fff;
-padding:30px;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
 }
 
-h2{
-text-align:center;
-margin-bottom:25px;
-color:#6F4E37;
+.card{
+
+    width:100%;
+    max-width:480px;
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(16px);
+
+    border:1px solid rgba(255,255,255,.20);
+
+    border-radius:22px;
+
+    padding:35px;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
+
+    text-align:center;
+
 }
 
-input{
-width:100%;
-padding:14px;
-margin-bottom:15px;
-border:1px solid #ccc;
-border-radius:8px;
-font-size:16px;
+.icon{
+
+    font-size:70px;
+
+    margin-bottom:15px;
+
 }
 
-button{
-width:100%;
-padding:14px;
-background:#6F4E37;
-color:white;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
+.card h2{
+
+    color:white;
+
+    font-size:34px;
+
+    margin-bottom:10px;
+
 }
 
-button:hover{
-background:#5a3d2b;
+.subtitle{
+
+    color:#f5f5f5;
+
+    line-height:1.7;
+
+    margin-bottom:28px;
+
 }
 
-p{
-margin-top:20px;
-text-align:center;
+form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:16px;
+
 }
 
-a{
-color:#6F4E37;
-font-weight:bold;
-text-decoration:none;
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    background:white;
+
 }
 
-#message{
-margin-top:15px;
-text-align:center;
-font-weight:bold;
-}
+input:focus,
+select:focus,
+textarea:focus{
+
+    border:2px solid
