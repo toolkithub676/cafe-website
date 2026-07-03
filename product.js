@@ -212,16 +212,27 @@ minus.addEventListener("click",()=>{
 
 cartBtn.addEventListener("click", async () => {
 
-    if (!currentUser) {
+    await window.addToCart({
 
-        window.location.href =
-        `customer-login.html?redirect=product&id=${productId}`;
+        productId: productId,
 
-        return;
+        vendorId: currentProduct.vendorId,
 
-    }
+        shopName: currentProduct.shopName,
 
-    alert("🛒 Cart System - Next Sprint");
+        category: currentProduct.category,
+
+        name: currentProduct.name,
+
+        image: currentProduct.image,
+
+        price: currentProduct.price,
+
+        stock: currentProduct.stock,
+
+        preparationTime: currentProduct.preparationTime
+
+    }, qty);
 
 });
 
@@ -231,16 +242,29 @@ cartBtn.addEventListener("click", async () => {
 
 buyBtn.addEventListener("click", async () => {
 
-    if (!currentUser) {
+    await window.addToCart({
 
-        window.location.href =
-        `customer-login.html?redirect=checkout&id=${productId}`;
+        productId: productId,
 
-        return;
+        vendorId: currentProduct.vendorId,
 
-    }
+        shopName: currentProduct.shopName,
 
-    alert("⚡ Checkout System - Next Sprint");
+        category: currentProduct.category,
+
+        name: currentProduct.name,
+
+        image: currentProduct.image,
+
+        price: currentProduct.price,
+
+        stock: currentProduct.stock,
+
+        preparationTime: currentProduct.preparationTime
+
+    }, qty);
+
+    window.location.href = "checkout.html";
 
 });
 
