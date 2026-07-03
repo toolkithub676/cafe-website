@@ -1,19 +1,27 @@
+/*
+====================================
+Brew Haven
+Customer Signup
+Version 2.0
+====================================
+*/
+
 import { auth, db } from "../firebase.js";
 
 import {
-createUserWithEmailAndPassword,
-updateProfile
+  createUserWithEmailAndPassword,
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 import {
-doc,
-setDoc,
-serverTimestamp
+  doc,
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// ========================
+// ======================
 // Elements
-// ========================
+// ======================
 
 const signupForm = document.getElementById("signupForm");
 
@@ -31,128 +39,135 @@ const toggleConfirmPassword = document.getElementById("toggleConfirmPassword");
 
 const googleSignup = document.getElementById("googleSignup");
 
-// ========================
-// Show Password
-// ========================
+// ======================
+// Toggle Password
+// ======================
 
-togglePassword.addEventListener("click",()=>{
+togglePassword.onclick = () => {
 
-if(password.type==="password"){
+    password.type =
+        password.type === "password" ? "text" : "password";
 
-password.type="text";
-togglePassword.innerHTML="🙈";
+};
 
-}else{
+toggleConfirmPassword.onclick = () => {
 
-password.type="password";
-togglePassword.innerHTML="👁️";
+    confirmPassword.type =
+        confirmPassword.type === "password" ? "text" : "password";
 
-}
+};
 
-});
-
-toggleConfirmPassword.addEventListener("click",()=>{
-
-if(confirmPassword.type==="password"){
-
-confirmPassword.type="text";
-toggleConfirmPassword.innerHTML="🙈";
-
-}else{
-
-confirmPassword.type="password";
-toggleConfirmPassword.innerHTML="👁️";
-
-}
-
-});
-
-// ========================
+// ======================
 // Signup
-// ========================
+// ======================
 
-signupForm.addEventListener("submit",async(e)=>{
+signupForm.addEventListener("submit", async (e) => {
 
-e.preventDefault();
+    e.preventDefault();
 
-message.style.color="white";
-message.innerHTML="Creating account...";
+    message.style.color = "white";
+    message.innerHTML = "Creating Account...";
 
-if(password.value!==confirmPassword.value){
+    if (password.value !== confirmPassword.value) {
 
-message.style.color="red";
-message.innerHTML="Passwords do not match.";
+        message.style.color = "red";
+        message.innerHTML = "Passwords do not match.";
 
-return;
+        return;
 
-}
+    }
 
-try{
+    try {
 
-const userCredential=
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email.value.trim(),
+                password.value
+            );
 
-await createUserWithEmailAndPassword(
+        await updateProfile(userCredential.user, {
 
-auth,
+            displayName: name.value.trim()
 
-email.value.trim(),
+        });
 
-password.value
+        // Save User
 
-);
+        await setDoc(
+            doc(db, "users", userCredential.user.uid),
+            {
 
-await updateProfile(userCredential.user,{
+                uid: userCredential.user.uid,
 
-displayName:name.value.trim()
+                name: name.value.trim(),
+
+                email: email.value.trim(),
+
+                phone: phone.value.trim(),
+
+                role: "customer",
+
+                isVendor: false,
+
+                photoURL: "",
+
+                defaultAddress: "",
+
+                isBlocked: false,
+
+                createdAt: serverTimestamp(),
+
+                lastLogin: serverTimestamp()
+
+            }
+        );
+
+        message.style.color = "lightgreen";
+        message.innerHTML =
+            "✅ Account Created Successfully";
+
+        setTimeout(() => {
+
+            window.location.href = "index.html";
+
+        }, 1000);
+
+    } catch (error) {
+
+        let msg = error.message;
+
+        if (error.code === "auth/email-already-in-use") {
+
+            msg = "This email is already registered.";
+
+        }
+
+        if (error.code === "auth/weak-password") {
+
+            msg = "Password should be at least 6 characters.";
+
+        }
+
+        if (error.code === "auth/invalid-email") {
+
+            msg = "Invalid email address.";
+
+        }
+
+        message.style.color = "red";
+        message.innerHTML = msg;
+
+    }
 
 });
 
-await setDoc(
-
-doc(db,"customers",userCredential.user.uid),
-
-{
-
-uid:userCredential.user.uid,
-
-name:name.value.trim(),
-
-email:email.value.trim(),
-
-phone:phone.value.trim(),
-
-role:"customer",
-
-createdAt:serverTimestamp()
-
-}
-
-);
-
-message.style.color="lightgreen";
-message.innerHTML="✅ Account Created Successfully";
-
-setTimeout(()=>{
-
-window.location.href="index.html";
-
-},1000);
-
-}catch(error){
-
-message.style.color="red";
-message.innerHTML=error.message;
-
-}
-
-});
-
-// ========================
+// ======================
 // Google Signup
-// ========================
+// ======================
 
-googleSignup.addEventListener("click",()=>{
+googleSignup.addEventListener("click", () => {
 
-alert("Google Signup Coming Soon");
+    alert("Google Signup Coming Soon");
 
 });
