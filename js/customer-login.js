@@ -1,3 +1,11 @@
+/*
+====================================
+Brew Haven
+Customer Login
+Version 2.0
+====================================
+*/
+
 import { auth, db } from "../firebase.js";
 
 import {
@@ -8,7 +16,9 @@ import {
 
 import {
   doc,
-  getDoc
+  getDoc,
+  updateDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 // ======================
@@ -30,16 +40,25 @@ const googleLogin = document.getElementById("googleLogin");
 
 onAuthStateChanged(auth, async (user) => {
 
-    if (!user) return;
+  if (!user) return;
 
-    const customerRef = doc(db, "customers", user.uid);
-    const customerSnap = await getDoc(customerRef);
+  const userRef = doc(db, "users", user.uid);
+  const userSnap = await getDoc(userRef);
 
-    if (customerSnap.exists()) {
+  if (userSnap.exists()) {
 
-        window.location.href = "index.html";
+    const data = userSnap.data();
 
+    if (data.isBlocked) {
+
+      message.style.color = "red";
+      message.innerHTML = "Your account has been blocked.";
+
+      return;
     }
+
+    window.location.href = "index.html";
+  }
 
 });
 
@@ -49,74 +68,108 @@ onAuthStateChanged(auth, async (user) => {
 
 loginForm.addEventListener("submit", async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    message.style.color = "white";
-    message.innerHTML = "Logging in...";
+  message.style.color = "white";
+  message.innerHTML = "Logging in...";
 
-    try {
+  try {
 
-        const userCredential = await signInWithEmailAndPassword(
-            auth,
-            email.value.trim(),
-            password.value
-        );
+    const userCredential =
+      await signInWithEmailAndPassword(
+        auth,
+        email.value.trim(),
+        password.value
+      );
 
-        const customerRef = doc(db, "customers", userCredential.user.uid);
+    const uid = userCredential.user.uid;
 
-        const customerSnap = await getDoc(customerRef);
+    const userRef = doc(db, "users", uid);
 
-        if (!customerSnap.exists()) {
+    const userSnap = await getDoc(userRef);
 
-            message.style.color = "red";
-            message.innerHTML = "Customer account not found.";
+    if (!userSnap.exists()) {
 
-            return;
+      message.style.color = "red";
+      message.innerHTML = "User profile not found.";
 
-        }
+      return;
+    }
 
-        message.style.color = "lightgreen";
-        message.innerHTML = "✅ Login Successful";
+    const userData = userSnap.data();
 
-        setTimeout(() => {
+    if (userData.isBlocked) {
 
-            window.location.href = "index.html";
+      message.style.color = "red";
+      message.innerHTML = "Your account has been blocked.";
 
-        },1000);
+      return;
 
     }
 
-    catch(error){
+    await updateDoc(userRef, {
 
-        message.style.color="red";
+      lastLogin: serverTimestamp()
 
-        message.innerHTML=error.message;
+    });
 
+    message.style.color = "lightgreen";
+    message.innerHTML = "✅ Login Successful";
+
+    setTimeout(() => {
+
+      window.location.href = "index.html";
+
+    }, 1000);
+
+  } catch (error) {
+
+    let msg = "Login Failed.";
+
+    switch (error.code) {
+
+      case "auth/invalid-email":
+        msg = "Invalid email address.";
+        break;
+
+      case "auth/user-not-found":
+        msg = "No account found.";
+        break;
+
+      case "auth/wrong-password":
+      case "auth/invalid-credential":
+        msg = "Incorrect email or password.";
+        break;
+
+      case "auth/too-many-requests":
+        msg = "Too many attempts. Try again later.";
+        break;
     }
+
+    message.style.color = "red";
+    message.innerHTML = msg;
+
+  }
 
 });
 
 // ======================
-// Show Password
+// Show / Hide Password
 // ======================
 
-togglePassword.addEventListener("click",()=>{
+togglePassword.addEventListener("click", () => {
 
-    if(password.type==="password"){
+  if (password.type === "password") {
 
-        password.type="text";
+    password.type = "text";
+    togglePassword.innerHTML = "🙈";
 
-        togglePassword.innerHTML="🙈";
+  } else {
 
-    }
+    password.type = "password";
+    togglePassword.innerHTML = "👁️";
 
-    else{
-
-        password.type="password";
-
-        togglePassword.innerHTML="👁️";
-
-    }
+  }
 
 });
 
@@ -124,31 +177,29 @@ togglePassword.addEventListener("click",()=>{
 // Forgot Password
 // ======================
 
-forgotPassword.addEventListener("click",async(e)=>{
+forgotPassword.addEventListener("click", async (e) => {
 
-    e.preventDefault();
+  e.preventDefault();
 
-    if(email.value.trim()===""){
+  if (email.value.trim() === "") {
 
-        alert("Enter your email first.");
+    alert("Please enter your email first.");
 
-        return;
+    return;
 
-    }
+  }
 
-    try{
+  try {
 
-        await sendPasswordResetEmail(auth,email.value.trim());
+    await sendPasswordResetEmail(auth, email.value.trim());
 
-        alert("Password reset email sent.");
+    alert("Password reset email sent.");
 
-    }
+  } catch (error) {
 
-    catch(error){
+    alert(error.message);
 
-        alert(error.message);
-
-    }
+  }
 
 });
 
@@ -156,8 +207,8 @@ forgotPassword.addEventListener("click",async(e)=>{
 // Google Login
 // ======================
 
-googleLogin.addEventListener("click",()=>{
+googleLogin.addEventListener("click", () => {
 
-    alert("Google Login will be enabled soon.");
+  alert("Google Login Coming Soon");
 
 });
