@@ -290,5 +290,3 @@ document.addEventListener("click", async (e) => {
     },1);
 
 });
-
-});
