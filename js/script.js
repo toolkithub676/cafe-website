@@ -1,29 +1,30 @@
 /*
-====================================
+
 Brew Haven
 Home Script
-Version 2.0
-====================================
+Version 3.0
+
 */
 
 import { db, auth } from "../firebase.js";
 
 import {
-  collection,
-  getDocs,
-  doc,
-  getDoc
+collection,
+getDocs,
+doc,
+getDoc
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
-  onAuthStateChanged,
-  signOut
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
 import "./cart.js";
 
-// ======================
-// Elements
-// ======================
+/* ======================
+Elements
+====================== */
 
 const productContainer = document.getElementById("productContainer");
 
@@ -37,184 +38,315 @@ const vendorLink = document.getElementById("vendorLink");
 const logoutBtn = document.getElementById("logoutBtn");
 const profileDropdown = document.getElementById("profileDropdown");
 
-// ======================
-// Mobile Menu
-// ======================
+/* ======================
+Search & Filter
+====================== */
 
-if (menuToggle && navMenu) {
+const searchInput = document.getElementById("searchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const sortFilter = document.getElementById("sortFilter");
 
-    menuToggle.addEventListener("click", () => {
+let allProducts = [];
 
-        navMenu.classList.toggle("active");
+/* ======================
+Mobile Menu
+====================== */
 
-    });
+if(menuToggle && navMenu){
 
-}
+menuToggle.addEventListener("click",()=>{  
 
-// ======================
-// Authentication
-// ======================
-
-onAuthStateChanged(auth, async (user) => {
-
-    if (!user) {
-
-        if(accountBtn){
-
-            accountBtn.innerHTML="👤 Account";
-
-            accountBtn.href="account.html";
-
-        }
-
-        return;
-
-    }
-
-    try{
-
-        const userRef=doc(db,"users",user.uid);
-
-        const userSnap=await getDoc(userRef);
-
-        if(!userSnap.exists()) return;
-
-        const data=userSnap.data();
-
-        accountBtn.innerHTML=`👤 ${data.name}`;
-
-        accountBtn.href="#";
-
-        userName.innerHTML=data.name;
-
-        userEmail.innerHTML=data.email;
-
-        if(data.isVendor){
-
-            vendorLink.innerHTML="🏪 Vendor Dashboard";
-
-            vendorLink.href="vendor-dashboard.html";
-
-        }else{
-
-            vendorLink.innerHTML="🏪 Become a Vendor";
-
-            vendorLink.href="vendor-signup.html";
-
-        }
-
-    }
-
-    catch(error){
-
-        console.log(error);
-
-    }
+    navMenu.classList.toggle("active");  
 
 });
-// ======================
-// Profile Dropdown
-// ======================
-
-if (accountBtn && profileDropdown) {
-
-    accountBtn.addEventListener("click", (e) => {
-
-        if (accountBtn.getAttribute("href") === "account.html") return;
-
-        e.preventDefault();
-
-        profileDropdown.classList.toggle("show");
-
-    });
-
-    document.addEventListener("click", (e) => {
-
-        if (
-            !profileDropdown.contains(e.target) &&
-            !accountBtn.contains(e.target)
-        ) {
-
-            profileDropdown.classList.remove("show");
-
-        }
-
-    });
 
 }
 
-// ======================
-// Logout
-// ======================
+/* ======================
+Authentication
+====================== */
 
-if (logoutBtn) {
+onAuthStateChanged(auth,async(user)=>{
 
-    logoutBtn.addEventListener("click", async (e) => {
+if(!user){  
 
-        e.preventDefault();
+    if(accountBtn){  
 
-        try {
+        accountBtn.innerHTML="👤 Account";  
 
-            await signOut(auth);
+        accountBtn.href="account.html";  
 
-            alert("Logout Successful");
+    }  
 
-            window.location.reload();
+    return;  
 
-        } catch (error) {
+}  
 
-            alert(error.message);
+try{  
 
-        }
+    const userRef=doc(db,"users",user.uid);  
 
-    });
+    const userSnap=await getDoc(userRef);  
+
+    if(!userSnap.exists()) return;  
+
+    const data=userSnap.data();  
+
+    accountBtn.innerHTML=`👤 ${data.name}`;  
+
+    accountBtn.href="#";  
+
+    userName.innerHTML=data.name;  
+
+    userEmail.innerHTML=data.email;  
+
+    if(data.isVendor){  
+
+        vendorLink.innerHTML="🏪 Vendor Dashboard";  
+
+        vendorLink.href="vendor-dashboard.html";  
+
+    }  
+
+    else{  
+
+        vendorLink.innerHTML="🏪 Become a Vendor";  
+
+        vendorLink.href="vendor-signup.html";  
+
+    }  
+
+}  
+
+catch(error){  
+
+    console.log(error);  
 
 }
 
-// ======================
-// Load Products
-// ======================
+});
 
-async function loadProducts() {
+/* ======================
+Profile Dropdown
+====================== */
 
-    if (!productContainer) return;
+if(accountBtn && profileDropdown){
 
-    productContainer.innerHTML = "<h3>Loading...</h3>";
+accountBtn.addEventListener("click",(e)=>{  
 
-    try {
+    if(accountBtn.getAttribute("href")==="account.html") return;  
 
-        const snapshot = await getDocs(collection(db, "products"));
+    e.preventDefault();  
 
-        productContainer.innerHTML = "";
+    profileDropdown.classList.toggle("show");  
 
-        if (snapshot.empty) {
+});  
 
-            productContainer.innerHTML = "<h3>No Products Found</h3>";
+document.addEventListener("click",(e)=>{  
 
-            return;
+    if(  
 
-        }
+        !profileDropdown.contains(e.target)  
 
-        snapshot.forEach((productDoc) => {
+        &&  
 
-            const product = productDoc.data();
+        !accountBtn.contains(e.target)  
 
-            productContainer.innerHTML += `
+    ){  
 
-            <div class="card">
+        profileDropdown.classList.remove("show");  
 
-                <img src="${product.image}" alt="${product.name}">
+    }  
 
-                <h3>${product.name}</h3>
+});
 
-                <p>${product.description}</p>
+}
 
-                <h4>₹${product.price}</h4>
+/* ======================
+Logout
+====================== */
 
-                <button
+if(logoutBtn){
+
+logoutBtn.addEventListener("click",async(e)=>{  
+
+    e.preventDefault();  
+
+    try{  
+
+        await signOut(auth);  
+
+        alert("Logout Successful");  
+
+        window.location.reload();  
+
+    }  
+
+    catch(error){  
+
+        alert(error.message);  
+
+    }  
+
+});
+
+}
+
+/* ======================
+Load Products
+====================== */
+async function loadProducts(){
+
+if(!productContainer) return;  
+
+productContainer.innerHTML="<h3>Loading...</h3>";  
+
+allProducts=[];  
+
+try{  
+
+    const snapshot=await getDocs(collection(db,"products"));  
+
+    if(snapshot.empty){  
+
+        productContainer.innerHTML="<h3>No Products Found</h3>";  
+
+        return;  
+
+    }  
+
+    snapshot.forEach((productDoc)=>{  
+
+        allProducts.push({  
+
+            id:productDoc.id,  
+
+            ...productDoc.data()  
+
+        });  
+
+    });  
+
+    filterProducts();  
+
+}  
+
+catch(error){  
+
+    console.error(error);  
+
+    productContainer.innerHTML=`
+
+<h3 style="color:red;">  Error Loading Products
+
+</h3>  <p>${error.message}</p>  `;
+
+}
+
+}
+
+loadProducts();
+
+/* ======================
+Filter Products
+====================== */
+
+function filterProducts(){
+
+let products=[...allProducts];  
+
+const search=(searchInput?.value||"").toLowerCase();  
+
+const category=categoryFilter?.value||"all";  
+
+const sort=sortFilter?.value||"default";  
+
+if(search){  
+
+    products=products.filter(product=>  
+
+        product.name?.toLowerCase().includes(search) ||  
+
+        product.description?.toLowerCase().includes(search) ||  
+
+        product.category?.toLowerCase().includes(search) ||  
+
+        product.shopName?.toLowerCase().includes(search)  
+
+    );  
+
+}  
+
+if(category!=="all"){  
+
+    products=products.filter(  
+
+        product=>product.category===category  
+
+    );  
+
+}  
+
+if(sort==="low"){  
+
+    products.sort((a,b)=>a.price-b.price);  
+
+}  
+
+else if(sort==="high"){  
+
+    products.sort((a,b)=>b.price-a.price);  
+
+}  
+
+else if(sort==="latest"){  
+
+    products.sort(  
+
+        (a,b)=>new Date(b.createdAt)-new Date(a.createdAt)  
+
+    );  
+
+}  
+
+productContainer.innerHTML="";  
+if(products.length===0){  
+
+    productContainer.innerHTML=`
+
+<h3>  No Products Found
+
+</h3>  `;
+
+return;  
+
+}  
+
+products.forEach(product=>{  
+
+    productContainer.innerHTML+=`
+
+<div class="card"  onclick="window.location.href='product.html?id=${product.id}'">
+
+<img
+
+src="${product.image}"
+
+alt="${product.name}">
+
+<h3>  ${product.name}
+
+</h3>  <p>  ${product.description}
+
+</p>  <h4>  ₹${product.price}
+
+</h4>  <button
+
 class="add-cart"
 
-data-id="${productDoc.id}"
+onclick="event.stopPropagation();"
+
+data-id="${product.id}"
 
 data-vendor="${product.vendorId}"
 
@@ -234,59 +366,111 @@ data-prep="${product.preparationTime}">
 
 🛒 Add To Cart
 
-</button>
+</button>  </div>  `;
 
-            </div>
-
-            `;
-
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        productContainer.innerHTML = `
-            <h3 style="color:red;">
-                Error Loading Products
-            </h3>
-            <p>${error.message}</p>
-        `;
-
-    }
+});
 
 }
 
-loadProducts();
+/* ======================
+Search Events
+====================== */
 
-// ======================
-// Future Cart Placeholder
-// ======================
+searchInput?.addEventListener(
 
-document.addEventListener("click", async (e) => {
+"input",
 
-    if (!e.target.classList.contains("add-cart")) return;
+filterProducts
 
-    await window.addToCart({
+);
 
-        productId: e.target.dataset.id,
+categoryFilter?.addEventListener(
 
-        vendorId: e.target.dataset.vendor,
+"change",
 
-        shopName: e.target.dataset.shop,
+filterProducts
 
-        category: e.target.dataset.category,
+);
 
-        name: e.target.dataset.name,
+sortFilter?.addEventListener(
 
-        image: e.target.dataset.image,
+"change",
 
-        price: Number(e.target.dataset.price),
+filterProducts
 
-        stock: Number(e.target.dataset.stock),
+);
+/* ======================
+Add To Cart
+====================== */
 
-        preparationTime: Number(e.target.dataset.prep)
+document.addEventListener("click", async (e)=>{
 
-    },1);
+if(!e.target.classList.contains("add-cart")) return;  
+
+await window.addToCart({  
+
+    productId:e.target.dataset.id,  
+
+    vendorId:e.target.dataset.vendor,  
+
+    shopName:e.target.dataset.shop,  
+
+    category:e.target.dataset.category,  
+
+    name:e.target.dataset.name,  
+
+    image:e.target.dataset.image,  
+
+    price:Number(e.target.dataset.price),  
+
+    stock:Number(e.target.dataset.stock),  
+
+    preparationTime:Number(e.target.dataset.prep)  
+
+},1);
 
 });
+
+/* ======================
+Future Ready Functions
+====================== */
+
+window.reloadProducts = async ()=>{
+
+await loadProducts();
+
+};
+
+window.refreshProducts = ()=>{
+
+filterProducts();
+
+};
+
+window.searchProducts = (text)=>{
+
+if(searchInput){  
+
+    searchInput.value=text;  
+
+    filterProducts();  
+
+}
+
+};
+
+window.filterCategory = (category)=>{
+
+if(categoryFilter){  
+
+    categoryFilter.value=category;  
+
+    filterProducts();  
+
+}
+
+};
+
+/* ======================
+End Of File
+====================== */
