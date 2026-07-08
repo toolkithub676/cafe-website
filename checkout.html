@@ -1,0 +1,484 @@
+/*
+====================================
+Brew Haven
+Checkout CSS
+Version 1.0
+====================================
+*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f6f6f6;
+    color:#222;
+    overflow-x:hidden;
+}
+
+/* ==========================
+        NAVBAR
+========================== */
+
+.navbar{
+
+    position:sticky;
+
+    top:0;
+
+    width:100%;
+
+    z-index:999;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 6%;
+
+    background:#3E2723;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.15);
+
+}
+
+.logo{
+
+    color:#fff;
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+.back-btn{
+
+    text-decoration:none;
+
+    color:#fff;
+
+    background:#6F4E37;
+
+    padding:10px 18px;
+
+    border-radius:8px;
+
+    transition:.3s;
+
+}
+
+.back-btn:hover{
+
+    background:#8B5E3C;
+
+}
+
+/* ==========================
+      CHECKOUT PAGE
+========================== */
+
+.checkout-page{
+
+    padding:40px 6%;
+
+}
+
+.checkout-container{
+
+    max-width:1400px;
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:30px;
+
+}
+
+/* ==========================
+      LEFT BOX
+========================== */
+
+.checkout-left{
+
+    background:#fff;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+.checkout-left h2{
+
+    color:#3E2723;
+
+    margin-bottom:25px;
+
+}
+
+.input-group{
+
+    margin-bottom:20px;
+
+}
+
+.input-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+.input-group input,
+
+.input-group textarea,
+
+.input-group select{
+
+    width:100%;
+
+    padding:14px;
+
+    border:2px solid #ddd;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.input-group input:focus,
+
+.input-group textarea:focus,
+
+.input-group select:focus{
+
+    border-color:#6F4E37;
+
+}
+
+/* ==========================
+      RIGHT BOX
+========================== */
+
+.checkout-right{
+
+    background:#fff;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+    height:fit-content;
+
+    position:sticky;
+
+    top:90px;
+
+}
+
+.checkout-right h2{
+
+    color:#3E2723;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================
+      PRODUCT LIST
+========================== */
+
+.checkout-items{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+    max-height:350px;
+
+    overflow-y:auto;
+
+}
+
+.checkout-item{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:center;
+
+    border-bottom:1px solid #eee;
+
+    padding-bottom:12px;
+
+}
+
+.checkout-item img{
+
+    width:70px;
+
+    height:70px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+}
+
+.checkout-item-info{
+
+    flex:1;
+
+}
+
+.checkout-item-info h4{
+
+    font-size:16px;
+
+    color:#3E2723;
+
+}
+
+.checkout-item-info p{
+
+    font-size:14px;
+
+    color:#666;
+
+}
+
+/* ==========================
+      SUMMARY
+========================== */
+
+.summary-box{
+
+    border-top:2px solid #eee;
+
+    padding-top:20px;
+
+}
+
+.summary-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:15px;
+
+    font-size:16px;
+
+}
+
+.total{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    color:#3E2723;
+
+}
+
+.place-order{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#28A745;
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.place-order:hover{
+
+    background:#1E7E34;
+
+}
+
+/* ==========================
+      FOOTER
+========================== */
+
+footer{
+
+    margin-top:50px;
+
+    background:#3E2723;
+
+    color:#fff;
+
+    text-align:center;
+
+    padding:30px;
+
+}
+
+/* ==========================
+      TABLET
+========================== */
+
+@media(max-width:1024px){
+
+.checkout-container{
+
+    grid-template-columns:1fr;
+
+}
+
+.checkout-right{
+
+    position:static;
+
+}
+
+}
+
+/* ==========================
+      MOBILE
+========================== */
+
+@media(max-width:768px){
+
+.navbar{
+
+    padding:15px;
+
+}
+
+.logo{
+
+    font-size:22px;
+
+}
+
+.back-btn{
+
+    font-size:14px;
+
+    padding:8px 14px;
+
+}
+
+.checkout-page{
+
+    padding:15px;
+
+}
+
+.checkout-left,
+
+.checkout-right{
+
+    padding:18px;
+
+    border-radius:12px;
+
+}
+
+.checkout-item img{
+
+    width:60px;
+
+    height:60px;
+
+}
+
+.summary-row{
+
+    font-size:15px;
+
+}
+
+.total{
+
+    font-size:18px;
+
+}
+
+.place-order{
+
+    padding:14px;
+
+    font-size:15px;
+
+}
+
+}
+
+/* ==========================
+      ANIMATION
+========================== */
+
+.checkout-container{
+
+    animation:fadeUp .6s ease;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+    opacity:0;
+
+    transform:translateY(20px);
+
+}
+
+to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+}
