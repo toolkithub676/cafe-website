@@ -701,93 +701,99 @@ padding:60px 5%;
 
 .menu-toggle{
 
-display:block;
+    display:block;
 
 }
 
 .navbar{
 
-flex-wrap:wrap;
+    flex-wrap:wrap;
 
 }
 
 .navbar ul{
 
-position:absolute;
+    position:absolute;
 
-top:75px;
+    top:75px;
 
-left:-100%;
+    left:-100%;
 
-width:100%;
+    width:100%;
 
-background:#3E2723;
+    background:#3E2723;
 
-display:flex;
+    display:flex;
 
-flex-direction:column;
+    flex-direction:column;
 
-text-align:center;
+    text-align:center;
 
-padding:20px 0;
+    padding:20px 0;
 
-transition:.4s;
+    transition:.4s;
 
 }
 
 .navbar ul.active{
 
-left:0;
+    left:0;
 
 }
 
 .navbar ul li{
 
-margin:15px 0;
+    margin:15px 0;
 
 }
 
+/* Hero */
+
 .hero{
 
-min-height:75vh;
+    min-height:50vh;
 
-padding:40px 20px;
+    padding:25px 20px;
 
 }
 
 .hero h1{
 
-font-size:40px;
+    font-size:36px;
 
 }
 
 .hero p{
 
-font-size:18px;
+    font-size:16px;
+
+    margin-bottom:20px;
 
 }
 
 .hero button{
 
-width:220px;
+    width:200px;
+
+    padding:12px;
+
+    font-size:15px;
 
 }
 
-.cards{
+/* Products */
 
-grid-template-columns:1fr 1fr;
+.featured{
 
-gap:20px;
+    padding:40px 20px;
 
 }
 
 .featured h2{
 
-font-size:32px;
+    font-size:30px;
 
-}
-
-}
+    margin-bottom:
 
 
 /* ===========================
