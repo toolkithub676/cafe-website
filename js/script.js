@@ -300,74 +300,6 @@ return score;
 Filter Products
 ====================== */
 
-function filterProducts(){
-
-let products = [...allProducts];  
-
-const keyword = (searchInput?.value || "").trim().toLowerCase();  
-
-const category = categoryFilter?.value || "all";  
-
-const sort = sortFilter?.value || "default";  
-
-/* ---------- SMART SEARCH ---------- */  
-
-if(keyword){  
-
-    products = products  
-    .map(product=>{  
-
-        return{  
-
-            ...product,  
-
-            score:calculateSearchScore(product,keyword)  
-
-        };  
-
-    })  
-
-    .filter(product=>product.score>0)  
-
-    .sort((a,b)=>b.score-a.score);  
-
-}  
-
-/* ---------- CATEGORY ---------- */  
-
-if(category!=="all"){  
-
-    products = products.filter(product=>  
-
-        (product.category || "").toLowerCase() ===  
-
-        category.toLowerCase()  
-
-    );  
-
-}  
-
-/* ---------- SORT ---------- */  
-
-if(sort==="low"){  
-
-    products.sort((a,b)=>a.price-b.price);  
-
-}  
-
-else if(sort==="high"){  
-
-    products.sort((a,b)=>b.price-a.price);  
-
-}  
-
-else if(sort==="latest"){  
-
-    products.sort((a,b)=>{  
-
-        if(!a.createdAt || !b.createdAt) return 0;  
-
-        return b.createdAt.seconds-a.createdAt.seconds;  
 
     });  
 
@@ -412,7 +344,7 @@ alt="${product.name}">
 
 <h3>  ${product.name}
 
-</h3>  <p>  ${product.description || "No Description Available"}
+</h3>  <p>  ${product.descqription || "No Description Available"}
 
 </p>  <h4>  ₹${product.price}
 
@@ -456,94 +388,118 @@ Filter Products
 
 function filterProducts(){
 
-let products=[...allProducts];  
+    let products = [...allProducts];
 
-const search=(searchInput?.value||"").toLowerCase();  
+    const keyword = (searchInput?.value || "").trim().toLowerCase();
 
-const category=categoryFilter?.value||"all";  
+    const category = categoryFilter?.value || "all";
 
-const sort=sortFilter?.value||"default";  
+    const sort = sortFilter?.value || "default";
 
-if(search){  
+    /* ---------- SMART SEARCH ---------- */
 
-    products=products.filter(product=>  
+    if(keyword){
 
-        product.name?.toLowerCase().includes(search) ||  
+        products = products
+        .map(product=>({
 
-        product.description?.toLowerCase().includes(search) ||  
+            ...product,
 
-        product.category?.toLowerCase().includes(search) ||  
+            score: calculateSearchScore(product, keyword)
 
-        product.shopName?.toLowerCase().includes(search)  
+        }))
+        .filter(product => product.score > 0)
+        .sort((a,b)=>b.score-a.score);
 
-    );  
+    }
 
-}  
+    /* ---------- CATEGORY ---------- */
 
-if(category!=="all"){  
+    if(category !== "all"){
 
-    products=products.filter(  
+        products = products.filter(product=>
 
-        product=>product.category===category  
+            (product.category || "").toLowerCase() ===
 
-    );  
+            category.toLowerCase()
 
-}  
+        );
 
-if(sort==="low"){  
+    }
 
-    products.sort((a,b)=>a.price-b.price);  
+    /* ---------- SORT ---------- */
 
-}  
+    if(sort === "low"){
 
-else if(sort==="high"){  
+        products.sort((a,b)=>a.price-b.price);
 
-    products.sort((a,b)=>b.price-a.price);  
+    }
 
-}  
+    else if(sort === "high"){
 
-else if(sort==="latest"){  
+        products.sort((a,b)=>b.price-a.price);
 
-    products.sort(  
+    }
 
-        (a,b)=>new Date(b.createdAt)-new Date(a.createdAt)  
+    else if(sort === "latest"){
 
-    );  
+        products.sort((a,b)=>{
 
-}  
+            if(!a.createdAt || !b.createdAt) return 0;
 
-productContainer.innerHTML="";  
-if(products.length===0){  
+            return b.createdAt.seconds - a.createdAt.seconds;
 
-    productContainer.innerHTML=`
+        });
 
-<h3>  No Products Found
+    }
 
-</h3>  `;
+    renderProducts(products);
 
-return;  
+}
 
-}  
+/* ======================
+Render Products
+====================== */
 
-products.forEach(product=>{  
+function renderProducts(products){
 
-    productContainer.innerHTML+=`
+    productContainer.innerHTML = "";
 
-<div class="card"  onclick="window.location.href='product.html?id=${product.id}'">
+    if(products.length === 0){
+
+        productContainer.innerHTML = `
+
+<h3>No Products Found</h3>
+
+<p>Try searching another product.</p>
+
+`;
+
+        return;
+
+    }
+
+    products.forEach(product=>{
+
+        productContainer.innerHTML += `
+
+<div class="card"
+
+onclick="window.location.href='product.html?id=${product.id}'">
 
 <img
-
 src="${product.image}"
-
 alt="${product.name}">
 
-<h3>  ${product.name}
+<h3>${product.name}</h3>
 
-</h3>  <p>  ${product.description}
+<p>${product.description || "No Description Available"}</p>
 
-</p>  <h4>  ₹${product.price}
+<p>⏱ ${product.preparationTime || 10} mins</p>
 
-</h4>  <button
+<h4>₹${product.price}</h4>
+
+<button
 
 class="add-cart"
 
@@ -569,12 +525,15 @@ data-prep="${product.preparationTime}">
 
 🛒 Add To Cart
 
-</button>  </div>  `;
+</button>
 
-});
+</div>
+
+`;
+
+    });
 
 }
-
 /* ======================
 Search Events
 ====================== */
