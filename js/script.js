@@ -248,6 +248,209 @@ catch(error){
 loadProducts();
 
 /* ======================
+Smart Search Engine
+====================== */
+
+function calculateSearchScore(product, keyword){
+
+keyword = keyword.toLowerCase().trim();  
+
+let score = 0;  
+
+const name =  
+(product.name || "").toLowerCase();  
+
+const category =  
+(product.category || "").toLowerCase();  
+
+const shop =  
+(product.shopName || "").toLowerCase();  
+
+const description =  
+(product.description || "").toLowerCase();  
+
+/* Exact Product Name */  
+
+if(name === keyword) score += 100;  
+
+/* Starts With */  
+
+if(name.startsWith(keyword)) score += 80;  
+
+/* Product Name */  
+
+if(name.includes(keyword)) score += 60;  
+
+/* Category */  
+
+if(category.includes(keyword)) score += 50;  
+
+/* Shop */  
+
+if(shop.includes(keyword)) score += 40;  
+
+/* Description */  
+
+if(description.includes(keyword)) score += 20;  
+
+return score;
+
+}
+/* ======================
+Filter Products
+====================== */
+
+function filterProducts(){
+
+let products = [...allProducts];  
+
+const keyword = (searchInput?.value || "").trim().toLowerCase();  
+
+const category = categoryFilter?.value || "all";  
+
+const sort = sortFilter?.value || "default";  
+
+/* ---------- SMART SEARCH ---------- */  
+
+if(keyword){  
+
+    products = products  
+    .map(product=>{  
+
+        return{  
+
+            ...product,  
+
+            score:calculateSearchScore(product,keyword)  
+
+        };  
+
+    })  
+
+    .filter(product=>product.score>0)  
+
+    .sort((a,b)=>b.score-a.score);  
+
+}  
+
+/* ---------- CATEGORY ---------- */  
+
+if(category!=="all"){  
+
+    products = products.filter(product=>  
+
+        (product.category || "").toLowerCase() ===  
+
+        category.toLowerCase()  
+
+    );  
+
+}  
+
+/* ---------- SORT ---------- */  
+
+if(sort==="low"){  
+
+    products.sort((a,b)=>a.price-b.price);  
+
+}  
+
+else if(sort==="high"){  
+
+    products.sort((a,b)=>b.price-a.price);  
+
+}  
+
+else if(sort==="latest"){  
+
+    products.sort((a,b)=>{  
+
+        if(!a.createdAt || !b.createdAt) return 0;  
+
+        return b.createdAt.seconds-a.createdAt.seconds;  
+
+    });  
+
+}  
+
+renderProducts(products);
+
+}
+/* ======================
+Render Products
+====================== */
+
+function renderProducts(products){
+
+productContainer.innerHTML="";  
+
+if(products.length===0){  
+
+    productContainer.innerHTML=`
+
+<h3>  No Products Found
+
+</h3>  <p>  Try searching another product.
+
+</p>  `;
+
+return;  
+
+}  
+
+products.forEach(product=>{  
+
+    productContainer.innerHTML+=`
+
+<div class="card"  onclick="window.location.href='product.html?id=${product.id}'">
+
+<img
+
+src="${product.image || 'images/no-image.png'}"
+
+alt="${product.name}">
+
+<h3>  ${product.name}
+
+</h3>  <p>  ${product.description || "No Description Available"}
+
+</p>  <h4>  ₹${product.price}
+
+</h4>  <p>  ⏱ ${product.preparationTime || 10} mins
+
+</p>  <button
+
+class="add-cart"
+
+onclick="event.stopPropagation();"
+
+data-id="${product.id}"
+
+data-vendor="${product.vendorId}"
+
+data-shop="${product.shopName}"
+
+data-category="${product.category}"
+
+data-name="${product.name}"
+
+data-image="${product.image}"
+
+data-price="${product.price}"
+
+data-stock="${product.stock}"
+
+data-prep="${product.preparationTime}">
+
+🛒 Add To Cart
+
+</button>  </div>  `;
+
+});
+
+} Ye itna hi hai na location batao kaha paste karu exactly
+
+/* ======================
 Filter Products
 ====================== */
 
