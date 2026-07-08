@@ -798,127 +798,149 @@ font-size:32px;
 
 .logo{
 
-font-size:24px;
+    font-size:24px;
 
 }
 
 .hero{
 
-padding:30px 15px;
+    min-height:45vh;
 
-min-height:70vh;
+    padding:20px 15px;
 
 }
 
 .hero h1{
 
-font-size:32px;
+    font-size:34px;
 
 }
 
 .hero p{
 
-font-size:16px;
+    font-size:15px;
 
-margin-bottom:25px;
+    margin-bottom:20px;
 
 }
 
 .hero button{
 
-width:100%;
+    width:200px;
 
-max-width:280px;
+    font-size:15px;
 
-font-size:16px;
-
-padding:14px;
+    padding:12px;
 
 }
 
 .featured{
 
-padding:45px 15px;
+    padding:30px 12px;
 
 }
 
 .featured h2{
 
-font-size:28px;
+    font-size:24px;
+
+    margin-bottom:20px;
 
 }
 
 .cards{
 
-grid-template-columns:1fr;
+    grid-template-columns:repeat(2,1fr);
+
+    gap:12px;
 
 }
 
 .card{
 
-border-radius:15px;
+    border-radius:12px;
 
 }
 
 .card img{
 
-height:220px;
+    height:120px;
 
 }
 
 .card h3{
 
-font-size:22px;
+    font-size:15px;
+
+    padding:8px 10px 4px;
+
+}
+
+.card p{
+
+    font-size:12px;
+
+    padding:0 10px;
+
+    line-height:1.4;
 
 }
 
 .card h4{
 
-font-size:20px;
+    font-size:16px;
+
+    padding:8px 10px;
 
 }
 
 .card button{
 
-font-size:16px;
+    width:calc(100% - 16px);
+
+    margin:8px;
+
+    padding:8px;
+
+    font-size:13px;
 
 }
 
 .search-box input{
 
-font-size:15px;
+    font-size:15px;
 
-padding:13px 16px;
+    padding:13px 16px;
 
 }
 
 .categories{
 
-justify-content:flex-start;
+    justify-content:flex-start;
 
-overflow-x:auto;
+    overflow-x:auto;
 
-flex-wrap:nowrap;
+    flex-wrap:nowrap;
 
-padding-bottom:10px;
+    padding-bottom:10px;
 
 }
 
 .categories::-webkit-scrollbar{
 
-display:none;
+    display:none;
 
 }
 
 .categories button{
 
-white-space:nowrap;
+    white-space:nowrap;
 
 }
 
 footer{
 
-padding:30px 15px;
+    padding:25px 15px;
 
 }
 
@@ -933,21 +955,27 @@ padding:30px 15px;
 
 .hero h1{
 
-font-size:72px;
+    font-size:60px;
 
 }
 
 .hero p{
 
-font-size:24px;
+    font-size:22px;
 
 }
 
 .cards{
 
-grid-template-columns:
+    grid-template-columns:repeat(4,1fr);
 
-repeat(4,1fr);
+    gap:24px;
+
+}
+
+.card img{
+
+    height:170px;
 
 }
 
