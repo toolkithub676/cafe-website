@@ -1,484 +1,160 @@
-/*
-====================================
-Brew Haven
-Checkout CSS
-Version 1.0
-====================================
-*/
+<!DOCTYPE html>
+<html lang="en">
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+<head>
 
-html{
-    scroll-behavior:smooth;
-}
+<meta charset="UTF-8">
 
-body{
-    background:#f6f6f6;
-    color:#222;
-    overflow-x:hidden;
-}
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-/* ==========================
+<title>Checkout | Brew Haven</title>
+
+<link rel="stylesheet"
+href="css/checkout.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ==========================
         NAVBAR
-========================== */
+========================== -->
 
-.navbar{
+<header>
 
-    position:sticky;
+<nav class="navbar">
 
-    top:0;
+<div class="logo">
 
-    width:100%;
+☕ Brew Haven
 
-    z-index:999;
+</div>
 
-    display:flex;
+<a href="cart.html"
+class="back-btn">
 
-    justify-content:space-between;
+← Back To Cart
 
-    align-items:center;
+</a>
 
-    padding:16px 6%;
+</nav>
 
-    background:#3E2723;
+</header>
 
-    box-shadow:0 4px 15px rgba(0,0,0,.15);
+<!-- ==========================
+      CHECKOUT SECTION
+========================== -->
 
-}
+<section class="checkout-page">
 
-.logo{
+<div class="checkout-container">
 
-    color:#fff;
+<!-- ==========================
+      CUSTOMER DETAILS
+========================== -->
 
-    font-size:28px;
+<div class="customer-box">
 
-    font-weight:700;
+<h2>
 
-}
+Delivery Details
 
-.back-btn{
+</h2>
 
-    text-decoration:none;
+<form id="checkoutForm">
 
-    color:#fff;
+<div class="input-group">
 
-    background:#6F4E37;
+<label>
 
-    padding:10px 18px;
+Full Name
 
-    border-radius:8px;
+</label>
 
-    transition:.3s;
+<input
 
-}
+type="text"
 
-.back-btn:hover{
+id="customerName"
 
-    background:#8B5E3C;
+placeholder="Enter your full name"
 
-}
+required>
 
-/* ==========================
-      CHECKOUT PAGE
-========================== */
+</div>
 
-.checkout-page{
+<div class="input-group">
 
-    padding:40px 6%;
+<label>
 
-}
+Phone Number
 
-.checkout-container{
+</label>
 
-    max-width:1400px;
+<input
 
-    margin:auto;
+type="tel"
 
-    display:grid;
+id="customerPhone"
 
-    grid-template-columns:2fr 1fr;
+placeholder="Enter phone number"
 
-    gap:30px;
+required>
 
-}
+</div>
 
-/* ==========================
-      LEFT BOX
-========================== */
+<div class="input-group">
 
-.checkout-left{
+<label>
 
-    background:#fff;
+Delivery Address
 
-    padding:30px;
+</label>
 
-    border-radius:18px;
+<textarea
 
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+id="customerAddress"
 
-}
+rows="5"
 
-.checkout-left h2{
+placeholder="Enter complete address"
 
-    color:#3E2723;
+required>
 
-    margin-bottom:25px;
+</textarea>
 
-}
+</div>
 
-.input-group{
+<div class="input-group">
 
-    margin-bottom:20px;
+<label>
 
-}
+Payment Method
 
-.input-group label{
+</label>
 
-    display:block;
+<select id="paymentMethod">
 
-    margin-bottom:8px;
+<option value="COD">
 
-    font-weight:600;
+Cash On Delivery
 
-}
+</option>
 
-.input-group input,
+<option value="ONLINE">
 
-.input-group textarea,
+Online Payment (Coming Soon)
 
-.input-group select{
+</option>
 
-    width:100%;
+</select>
 
-    padding:14px;
+</div>
 
-    border:2px solid #ddd;
+</form>
 
-    border-radius:10px;
-
-    font-size:15px;
-
-    outline:none;
-
-    transition:.3s;
-
-}
-
-.input-group input:focus,
-
-.input-group textarea:focus,
-
-.input-group select:focus{
-
-    border-color:#6F4E37;
-
-}
-
-/* ==========================
-      RIGHT BOX
-========================== */
-
-.checkout-right{
-
-    background:#fff;
-
-    padding:25px;
-
-    border-radius:18px;
-
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
-
-    height:fit-content;
-
-    position:sticky;
-
-    top:90px;
-
-}
-
-.checkout-right h2{
-
-    color:#3E2723;
-
-    margin-bottom:20px;
-
-}
-
-/* ==========================
-      PRODUCT LIST
-========================== */
-
-.checkout-items{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:15px;
-
-    margin-bottom:20px;
-
-    max-height:350px;
-
-    overflow-y:auto;
-
-}
-
-.checkout-item{
-
-    display:flex;
-
-    gap:12px;
-
-    align-items:center;
-
-    border-bottom:1px solid #eee;
-
-    padding-bottom:12px;
-
-}
-
-.checkout-item img{
-
-    width:70px;
-
-    height:70px;
-
-    object-fit:cover;
-
-    border-radius:10px;
-
-}
-
-.checkout-item-info{
-
-    flex:1;
-
-}
-
-.checkout-item-info h4{
-
-    font-size:16px;
-
-    color:#3E2723;
-
-}
-
-.checkout-item-info p{
-
-    font-size:14px;
-
-    color:#666;
-
-}
-
-/* ==========================
-      SUMMARY
-========================== */
-
-.summary-box{
-
-    border-top:2px solid #eee;
-
-    padding-top:20px;
-
-}
-
-.summary-row{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin-bottom:15px;
-
-    font-size:16px;
-
-}
-
-.total{
-
-    font-size:20px;
-
-    font-weight:700;
-
-    color:#3E2723;
-
-}
-
-.place-order{
-
-    width:100%;
-
-    margin-top:20px;
-
-    padding:16px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#28A745;
-
-    color:#fff;
-
-    font-size:17px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-}
-
-.place-order:hover{
-
-    background:#1E7E34;
-
-}
-
-/* ==========================
-      FOOTER
-========================== */
-
-footer{
-
-    margin-top:50px;
-
-    background:#3E2723;
-
-    color:#fff;
-
-    text-align:center;
-
-    padding:30px;
-
-}
-
-/* ==========================
-      TABLET
-========================== */
-
-@media(max-width:1024px){
-
-.checkout-container{
-
-    grid-template-columns:1fr;
-
-}
-
-.checkout-right{
-
-    position:static;
-
-}
-
-}
-
-/* ==========================
-      MOBILE
-========================== */
-
-@media(max-width:768px){
-
-.navbar{
-
-    padding:15px;
-
-}
-
-.logo{
-
-    font-size:22px;
-
-}
-
-.back-btn{
-
-    font-size:14px;
-
-    padding:8px 14px;
-
-}
-
-.checkout-page{
-
-    padding:15px;
-
-}
-
-.checkout-left,
-
-.checkout-right{
-
-    padding:18px;
-
-    border-radius:12px;
-
-}
-
-.checkout-item img{
-
-    width:60px;
-
-    height:60px;
-
-}
-
-.summary-row{
-
-    font-size:15px;
-
-}
-
-.total{
-
-    font-size:18px;
-
-}
-
-.place-order{
-
-    padding:14px;
-
-    font-size:15px;
-
-}
-
-}
-
-/* ==========================
-      ANIMATION
-========================== */
-
-.checkout-container{
-
-    animation:fadeUp .6s ease;
-
-}
-
-@keyframes fadeUp{
-
-from{
-
-    opacity:0;
-
-    transform:translateY(20px);
-
-}
-
-to{
-
-    opacity:1;
-
-    transform:translateY(0);
-
-}
-
-}
+</div>
