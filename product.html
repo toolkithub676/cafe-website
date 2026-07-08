@@ -5,17 +5,24 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Product | Brew Haven</title>
 
-<link rel="stylesheet" href="css/product.css">
+<link rel="stylesheet"
+href="css/product.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 </head>
 
 <body>
+
+<!-- ==========================
+        HEADER
+========================== -->
 
 <header>
 
@@ -27,7 +34,8 @@
 
 </div>
 
-<a href="index.html" class="back-btn">
+<a href="index.html"
+class="back-btn">
 
 ← Back
 
@@ -37,17 +45,30 @@
 
 </header>
 
+<!-- ==========================
+      PRODUCT PAGE
+========================== -->
+
 <section class="product-page">
 
 <div class="product-container">
 
+<!-- ==========================
+      PRODUCT IMAGE
+========================== -->
+
 <div class="product-image">
 
-<img id="productImage"
+<img
+id="productImage"
 src=""
 alt="Product">
 
 </div>
+
+<!-- ==========================
+      PRODUCT DETAILS
+========================== -->
 
 <div class="product-details">
 
@@ -87,20 +108,151 @@ Loading...
 
 </h2>
 
-<p class="
-  <footer>
+<p class="stock">
 
-<div class="footer-content">
+📦 Stock :
 
-<p>
+<b id="stock">
 
-© 2026 Brew Haven Café. All Rights Reserved.
+0
+
+</b>
+
+</p>
+
+<p class="prep-time">
+
+⏱ Preparation Time :
+
+<b id="prepTime">
+
+0
+
+</b>
+
+mins
+
+</p>
+
+<div
+
+id="availability"
+
+class="available">
+
+Checking...
+
+</div>
+<!-- ==========================
+      DESCRIPTION
+========================== -->
+
+<div class="description">
+
+<h3>Description</h3>
+
+<p id="description">
+
+Loading...
 
 </p>
 
 </div>
 
+<!-- ==========================
+      QUANTITY
+========================== -->
+
+<div class="quantity-box">
+
+<button id="minus">−</button>
+
+<span id="quantity">1</span>
+
+<button id="plus">+</button>
+
+</div>
+
+<!-- ==========================
+      ACTION BUTTONS
+========================== -->
+
+<div class="action-buttons">
+
+<button
+id="wishlistBtn"
+class="wishlist">
+
+❤️ Wishlist
+
+</button>
+
+<button
+id="cartBtn"
+class="cart">
+
+🛒 Add To Cart
+
+</button>
+
+<button
+id="buyBtn"
+class="buy">
+
+⚡ Buy Now
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================
+      RELATED PRODUCTS
+========================== -->
+
+<section class="related-products">
+
+<h2>
+
+You May Also Like
+
+</h2>
+
+<div
+
+class="cards"
+
+id="relatedContainer">
+
+<!-- Related Products -->
+
+</div>
+
+</section>
+
+<!-- ==========================
+        FOOTER
+========================== -->
+
+<footer>
+
+<p>
+
+© 2026 Brew Haven Café.
+All Rights Reserved.
+
+</p>
+
 </footer>
+
+<!-- ==========================
+      JAVASCRIPT
+========================== -->
 
 <script type="module" src="js/product.js"></script>
 
