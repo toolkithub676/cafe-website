@@ -1,416 +1,712 @@
 /*
 ====================================
 Brew Haven
-Cart System
-Version 2.0
+Cart System V3
+PART 1 / 4
 ====================================
 */
 
 import { db, auth } from "../firebase.js";
 
 import {
-    doc,
-    getDoc,
-    setDoc,
-    updateDoc,
-    serverTimestamp
+doc,
+getDoc,
+setDoc,
+updateDoc,
+serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 import {
-    onAuthStateChanged
+onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-/* ========= ELEMENTS ========= */
+/* ==========================
+        ELEMENTS
+========================== */
 
-const cartContainer = document.getElementById("cartContainer");
-const emptyCart = document.getElementById("emptyCart");
-const loginRequired = document.getElementById("loginRequired");
+const cartContainer =
+document.getElementById("cartContainer");
 
-const totalItems = document.getElementById("totalItems");
-const subtotal = document.getElementById("subtotal");
-const delivery = document.getElementById("delivery");
-const grandTotal = document.getElementById("grandTotal");
-const checkoutBtn = document.getElementById("checkoutBtn");
+const emptyCart =
+document.getElementById("emptyCart");
 
-/* ========= VARIABLES ========= */
+const loginRequired =
+document.getElementById("loginRequired");
+
+const loadingOverlay =
+document.getElementById("loadingOverlay");
+
+const toast =
+document.getElementById("toast");
+
+const totalItems =
+document.getElementById("totalItems");
+
+const subtotal =
+document.getElementById("subtotal");
+
+const delivery =
+document.getElementById("delivery");
+
+const grandTotal =
+document.getElementById("grandTotal");
+
+const checkoutBtn =
+document.getElementById("checkoutBtn");
+
+/* ==========================
+        VARIABLES
+========================== */
 
 let currentUser = null;
-let cartData = null;
+
+let cartData = {
+
+vendorId:null,
+
+items:[]
+
+};
+
 const DELIVERY_CHARGE = 40;
 
-/* ========= LOGIN ========= */
+/* ==========================
+      AUTH STATE
+========================== */
 
-onAuthStateChanged(auth, async (user)=>{
+onAuthStateChanged(auth,async(user)=>{
 
-    if(!user){
+if(!user){
 
-        loginRequired.style.display="block";
+loginRequired.style.display="block";
 
-        cartContainer.style.display="none";
+emptyCart.style.display="none";
 
-        document.querySelector(".cart-summary").style.display="none";
+cartContainer.innerHTML="";
 
-        return;
+document.querySelector(".cart-summary").style.display="none";
 
-    }
+return;
 
-    currentUser=user;
+}
 
-    loginRequired.style.display="none";
+currentUser=user;
 
-    await loadCart();
+loginRequired.style.display="none";
+
+await loadCart();
 
 });
 
-/* ========= LOAD CART ========= */
+/* ==========================
+      LOADING
+========================== */
+
+function showLoading(){
+
+if(loadingOverlay){
+
+loadingOverlay.style.display="flex";
+
+}
+
+}
+
+function hideLoading(){
+
+if(loadingOverlay){
+
+loadingOverlay.style.display="none";
+
+}
+
+}
+
+/* ==========================
+      TOAST
+========================== */
+
+function showToast(message){
+
+if(!toast) return;
+
+toast.innerHTML=message;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},2500);
+
+}
+
+/* ==========================
+      LOAD CART
+========================== */
 
 async function loadCart(){
 
-    try{
+showLoading();
 
-        const cartRef=doc(db,"carts",currentUser.uid);
+try{
 
-        const cartSnap=await getDoc(cartRef);
+const cartRef=doc(
 
-        if(!cartSnap.exists()){
+db,
 
-            emptyCart.style.display="block";
+"carts",
 
-            cartContainer.innerHTML="";
+currentUser.uid
 
-            document.querySelector(".cart-summary").style.display="none";
+);
 
-            return;
+const cartSnap=
 
-        }
+await getDoc(cartRef);
 
-        cartData=cartSnap.data();
+if(!cartSnap.exists()){
 
-        renderCart();
+cartData={
 
-    }
+vendorId:null,
 
-    catch(error){
+items:[]
 
-        console.log(error);
+};
 
-        alert(error.message);
+renderCart();
 
-    }
+hideLoading();
+
+return;
 
 }
-/* ========= RENDER CART ========= */
+
+cartData=cartSnap.data();
+
+renderCart();
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(error.message);
+
+}
+
+hideLoading();
+
+}
+/* ==========================
+      RENDER CART
+========================== */
 
 function renderCart(){
 
-    cartContainer.innerHTML="";
+cartContainer.innerHTML="";
 
-    const items = cartData.items || [];
+const items = cartData.items || [];
 
-    if(items.length===0){
+if(items.length===0){
 
-        emptyCart.style.display="block";
+emptyCart.style.display="block";
 
-        cartContainer.innerHTML="";
+cartContainer.innerHTML="";
 
-        document.querySelector(".cart-summary").style.display="none";
+document.querySelector(".cart-summary").style.display="none";
 
-        return;
+return;
 
-    }
+}
 
-    emptyCart.style.display="none";
+emptyCart.style.display="none";
 
-    document.querySelector(".cart-summary").style.display="block";
+document.querySelector(".cart-summary").style.display="block";
 
-    let itemCount=0;
-    let total=0;
+let itemCount = 0;
 
-    items.forEach((item,index)=>{
+let total = 0;
 
-        itemCount += item.quantity;
+items.forEach((item,index)=>{
 
-        total += item.price * item.quantity;
+itemCount += item.quantity;
 
-        cartContainer.innerHTML += `
+total += item.price * item.quantity;
+
+cartContainer.innerHTML += `
 
 <div class="cart-item">
 
-    <img src="${item.image}" alt="${item.name}">
+<img
+src="${item.image}"
+alt="${item.name}">
 
-    <div class="item-details">
+<div class="item-details">
 
-        <h3>${item.name}</h3>
+<h3>
 
-        <p class="item-price">₹${item.price}</p>
+${item.name}
 
-        <p>⏱ Ready in ${item.preparationTime} mins</p>
+</h3>
 
-        <div class="quantity-controls">
+<p class="item-price">
 
-            <button onclick="decreaseQuantity(${index})">−</button>
+₹${item.price}
 
-            <span>${item.quantity}</span>
+</p>
 
-            <button onclick="increaseQuantity(${index})">+</button>
+<p>
 
-        </div>
+⏱ Ready in ${item.preparationTime} mins
 
-        <button
-        class="remove-btn"
-        onclick="removeItem(${index})">
+</p>
 
-        🗑 Remove
+<div class="quantity-controls">
 
-        </button>
+<button
+onclick="decreaseQuantity(${index})">
 
-    </div>
+−
+
+</button>
+
+<span>
+
+${item.quantity}
+
+</span>
+
+<button
+onclick="increaseQuantity(${index})">
+
++
+
+</button>
+
+</div>
+
+<button
+
+class="remove-btn"
+
+onclick="removeItem(${index})">
+
+🗑 Remove
+
+</button>
+
+</div>
 
 </div>
 
 `;
 
-    });
+});
 
-    totalItems.textContent = itemCount;
+totalItems.textContent = itemCount;
 
-    subtotal.textContent = `₹${total}`;
+subtotal.textContent = `₹${total}`;
 
-    delivery.textContent = `₹${DELIVERY_CHARGE}`;
+delivery.textContent = `₹${DELIVERY_CHARGE}`;
 
-    grandTotal.textContent = `₹${total + DELIVERY_CHARGE}`;
+grandTotal.textContent =
+
+`₹${total + DELIVERY_CHARGE}`;
 
 }
-/* ========= QUANTITY FUNCTIONS ========= */
+
+/* ==========================
+      QUANTITY +
+========================== */
 
 async function increaseQuantity(index){
 
-    const item = cartData.items[index];
+const item = cartData.items[index];
 
-    if(item.quantity >= item.stock){
+if(item.quantity >= item.stock){
 
-        alert("Maximum stock reached.");
+showToast("Maximum stock reached");
 
-        return;
-
-    }
-
-    item.quantity++;
-
-    await saveCart();
+return;
 
 }
+
+item.quantity++;
+
+await saveCart();
+
+}
+
+/* ==========================
+      QUANTITY -
+========================== */
 
 async function decreaseQuantity(index){
 
-    const item = cartData.items[index];
+const item = cartData.items[index];
 
-    if(item.quantity <= 1){
+if(item.quantity <= 1){
+
+return;
+
+}
+
+item.quantity--;
+
+await saveCart();
+
+}
+/* ==========================
+      REMOVE ITEM
+========================== */
+
+async function removeItem(index){
+
+const ok = confirm(
+
+"Remove this product from cart?"
+
+);
+
+if(!ok) return;
+
+cartData.items.splice(index,1);
+
+await saveCart();
+
+}
+
+/* ==========================
+      SAVE CART
+========================== */
+
+async function saveCart(){
+
+showLoading();
+
+try{
+
+const cartRef = doc(
+
+db,
+
+"carts",
+
+currentUser.uid
+
+);
+
+if(cartData.items.length===0){
+
+await updateDoc(cartRef,{
+
+vendorId:null,
+
+items:[],
+
+updatedAt:serverTimestamp()
+
+});
+
+renderCart();
+
+hideLoading();
+
+showToast("Cart Updated");
+
+return;
+
+}
+
+await updateDoc(cartRef,{
+
+vendorId:cartData.vendorId,
+
+items:cartData.items,
+
+updatedAt:serverTimestamp()
+
+});
+
+renderCart();
+
+showToast("Cart Updated");
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(error.message);
+
+}
+
+hideLoading();
+
+}
+
+/* ==========================
+      ADD TO CART ENGINE
+========================== */
+
+async function addToCart(product,quantity=1){
+
+if(!auth.currentUser){
+
+window.location.href=
+
+`customer-login.html?redirect=cart&id=${product.productId}`;
+
+return;
+
+}
+
+const uid = auth.currentUser.uid;
+
+const cartRef = doc(
+
+db,
+
+"carts",
+
+uid
+
+);
+
+const cartSnap =
+
+await getDoc(cartRef);
+
+/* ---------- NEW CART ---------- */
+
+if(!cartSnap.exists()){
+
+await setDoc(cartRef,{
+
+vendorId:product.vendorId,
+
+items:[{
+
+productId:product.productId,
+
+vendorId:product.vendorId,
+
+shopName:product.shopName,
+
+category:product.category,
+
+name:product.name,
+
+image:product.image,
+
+price:product.price,
+
+quantity:quantity,
+
+stock:product.stock,
+
+preparationTime:product.preparationTime
+
+}],
+
+updatedAt:serverTimestamp()
+
+});
+
+showToast("Product Added");
+
+return;
+
+}
+
+const cart = cartSnap.data();
+
+/* ---------- SINGLE VENDOR ---------- */
+
+if(cart.vendorId!==product.vendorId){
+
+const clear = confirm(
+
+"Your cart contains products from another café.\n\nClear cart and add this item?"
+
+);
+
+if(!clear) return;
+
+cart.vendorId = product.vendorId;
+
+cart.items = [];
+
+}
+
+const existing = cart.items.find(
+
+item=>item.productId===product.productId
+
+);
+
+if(existing){
+
+if(existing.quantity+quantity>existing.stock){
+
+showToast("Maximum stock reached");
+
+return;
+
+}
+
+existing.quantity += quantity;
+
+}
+
+else{
+
+cart.items.push({
+
+productId:product.productId,
+
+vendorId:product.vendorId,
+
+shopName:product.shopName,
+
+category:product.category,
+
+name:product.name,
+
+image:product.image,
+
+price:product.price,
+
+quantity:quantity,
+
+stock:product.stock,
+
+preparationTime:product.preparationTime
+
+});
+
+}
+        await updateDoc(cartRef,{
+
+        vendorId:cart.vendorId,
+
+        items:cart.items,
+
+        updatedAt:serverTimestamp()
+
+    });
+
+    showToast("✅ Product Added To Cart");
+
+}
+
+/* ==========================
+      CHECKOUT
+========================== */
+
+checkoutBtn?.addEventListener("click",()=>{
+
+    if(!cartData.items || cartData.items.length===0){
+
+        showToast("Your cart is empty");
 
         return;
 
     }
 
-    item.quantity--;
+    window.location.href="checkout.html";
 
-    await saveCart();
+});
 
-}
-
-/* ========= REMOVE ITEM ========= */
-
-async function removeItem(index){
-
-    const ok = confirm("Remove this product from cart?");
-
-    if(!ok) return;
-
-    cartData.items.splice(index,1);
-
-    await saveCart();
-
-}
-
-/* ========= SAVE CART ========= */
-
-async function saveCart(){
-
-    try{
-
-        const cartRef = doc(db,"carts",currentUser.uid);
-
-        if(cartData.items.length===0){
-
-            await updateDoc(cartRef,{
-
-                items:[],
-
-                updatedAt:serverTimestamp()
-
-            });
-
-            renderCart();
-
-            return;
-
-        }
-
-        await updateDoc(cartRef,{
-
-            items:cartData.items,
-
-            updatedAt:serverTimestamp()
-
-        });
-
-        renderCart();
-
-    }
-
-    catch(error){
-
-        console.log(error);
-
-        alert(error.message);
-
-    }
-
-}
-
-/* ========= WINDOW FUNCTIONS ========= */
+/* ==========================
+      GLOBAL FUNCTIONS
+========================== */
 
 window.increaseQuantity = increaseQuantity;
 
 window.decreaseQuantity = decreaseQuantity;
 
 window.removeItem = removeItem;
-/* ========= ADD TO CART ENGINE ========= */
 
-async function addToCart(product, quantity = 1){
+window.addToCart = addToCart;
 
-    if(!auth.currentUser){
+/* ==========================
+      RELOAD CART
+========================== */
 
-        window.location.href =
-        `customer-login.html?redirect=cart&id=${product.productId}`;
+window.reloadCart = async()=>{
 
-        return;
+    if(currentUser){
 
-    }
-
-    const uid = auth.currentUser.uid;
-
-    const cartRef = doc(db,"carts",uid);
-
-    const cartSnap = await getDoc(cartRef);
-
-    /* ---------- CREATE NEW CART ---------- */
-
-    if(!cartSnap.exists()){
-
-        await setDoc(cartRef,{
-
-            vendorId:product.vendorId,
-
-            items:[{
-
-                productId:product.productId,
-                name:product.name,
-                image:product.image,
-                price:product.price,
-                quantity:quantity,
-                stock:product.stock,
-                preparationTime:product.preparationTime
-
-            }],
-
-            updatedAt:serverTimestamp()
-
-        });
-
-        alert("✅ Product Added To Cart");
-
-        return;
+        await loadCart();
 
     }
 
-    const cart = cartSnap.data();
+};
 
-    /* ---------- DIFFERENT VENDOR ---------- */
+/* ==========================
+      CLEAR CART
+========================== */
 
-    if(cart.vendorId !== product.vendorId){
+window.clearCart = async()=>{
 
-        const clear = confirm(
+    if(!currentUser) return;
 
-            "Your cart contains products from another café.\n\nClear cart and add this item?"
+    cartData = {
 
-        );
+        vendorId:null,
 
-        if(!clear) return;
+        items:[]
 
-        cart.vendorId = product.vendorId;
+    };
 
-        cart.items = [];
+    await saveCart();
 
-    }
+};
 
-    /* ---------- SAME PRODUCT ---------- */
+/* ==========================
+      CART COUNT
+========================== */
 
-    const existing = cart.items.find(
+window.getCartCount = ()=>{
 
-        item => item.productId === product.productId
+    if(!cartData.items) return 0;
+
+    return cartData.items.reduce(
+
+        (total,item)=>total+item.quantity,
+
+        0
 
     );
 
-    if(existing){
+};
 
-        if(existing.quantity + quantity > existing.stock){
+/* ==========================
+      CART TOTAL
+========================== */
 
-            alert("Maximum stock reached.");
+window.getCartTotal = ()=>{
 
-            return;
+    if(!cartData.items) return 0;
 
-        }
+    return cartData.items.reduce(
 
-        existing.quantity += quantity;
+        (total,item)=>
 
-    }
+            total + (item.price * item.quantity),
 
-    else{
+        0
 
-        cart.items.push({
+    );
 
-            productId:product.productId,
-            name:product.name,
-            image:product.image,
-            price:product.price,
-            quantity:quantity,
-            stock:product.stock,
-            preparationTime:product.preparationTime
+};
 
-        });
-
-    }
-
-    await updateDoc(cartRef,{
-
-        vendorId:cart.vendorId,
-        items:cart.items,
-        updatedAt:serverTimestamp()
-
-    });
-
-    alert("✅ Product Added To Cart");
-
-}
-
-/* ========= CHECKOUT ========= */
-
-checkoutBtn?.addEventListener("click",()=>{
-
-    window.location.href="checkout.html";
-
-});
-
-/* ========= GLOBAL ========= */
-
-window.addToCart = addToCart;
+/* ==========================
+      END OF FILE
+========================== */
