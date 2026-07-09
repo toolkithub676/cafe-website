@@ -5,17 +5,24 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>My Cart | Brew Haven</title>
+<title>Cart | Brew Haven</title>
 
-<link rel="stylesheet" href="css/cart.css">
+<link rel="stylesheet"
+href="css/cart.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
 
 </head>
 
 <body>
+
+<!-- ==========================
+        NAVBAR
+========================== -->
 
 <header>
 
@@ -27,29 +34,134 @@
 
 </div>
 
-<a href="menu.html" class="back-btn">
+<div class="nav-actions">
 
-← Continue Shopping
+<a
+href="index.html"
+class="back-btn">
+
+🏠 Home
 
 </a>
+
+<a
+href="checkout.html"
+id="checkoutTopBtn"
+class="checkout-btn">
+
+Checkout →
+
+</a>
+
+</div>
 
 </nav>
 
 </header>
 
+<!-- ==========================
+        CART PAGE
+========================== -->
+
 <section class="cart-page">
 
-<h1>
+<div class="cart-container">
+
+<!-- ==========================
+      LEFT SIDE
+========================== -->
+
+<div class="cart-left">
+
+<h2>
 
 🛒 My Cart
 
-</h1>
+</h2>
 
-<div id="cartContainer">
+<p class="cart-subtitle">
 
-<!-- Cart Items Here -->
+Review your selected products before checkout.
+
+</p>
+
+<!-- LOGIN REQUIRED -->
+
+<div
+id="loginRequired"
+class="login-required"
+style="display:none;">
+
+<h3>
+
+Login Required
+
+</h3>
+
+<p>
+
+Please login to access your cart.
+
+</p>
+
+<a
+href="customer-login.html"
+class="login-btn">
+
+Login
+
+</a>
 
 </div>
+
+<!-- EMPTY CART -->
+
+<div
+id="emptyCart"
+class="empty-cart"
+style="display:none;">
+
+<img
+src="images/empty-cart.png"
+alt="Empty Cart">
+
+<h3>
+
+Your Cart Is Empty
+
+</h3>
+
+<p>
+
+Looks like you haven't added anything yet.
+
+</p>
+
+<a
+href="index.html"
+class="shop-btn">
+
+Continue Shopping
+
+</a>
+
+</div>
+
+<!-- CART ITEMS -->
+
+<div
+id="cartContainer"
+class="cart-items">
+
+<!-- Dynamic Products -->
+
+</div>
+
+</div>
+
+<!-- ==========================
+      RIGHT SIDE
+========================== -->
 
 <div class="cart-summary">
 
@@ -63,15 +175,15 @@ Order Summary
 
 <span>
 
-Items
+Total Items
 
 </span>
 
-<span id="totalItems">
+<b id="totalItems">
 
 0
 
-</span>
+</b>
 
 </div>
 
@@ -83,11 +195,11 @@ Subtotal
 
 </span>
 
-<span id="subtotal">
+<b id="subtotal">
 
 ₹0
 
-</span>
+</b>
 
 </div>
 
@@ -95,19 +207,19 @@ Subtotal
 
 <span>
 
-Delivery
+Delivery Charge
 
 </span>
 
-<span id="delivery">
+<b id="delivery">
 
 ₹40
 
-</span>
+</b>
 
 </div>
 
-<div class="summary-row total">
+<div class="summary-row grand-total">
 
 <span>
 
@@ -115,84 +227,150 @@ Grand Total
 
 </span>
 
-<span id="grandTotal">
+<b id="grandTotal">
 
 ₹40
 
-</span>
+</b>
 
 </div>
 
-<button id="checkoutBtn">
+<div class="summary-buttons">
 
-💳 Proceed To Checkout
+<button
+id="checkoutBtn"
+class="checkout-main">
+
+Proceed To Checkout
+
+</button>
+
+<a
+href="index.html"
+class="continue-shopping">
+
+Continue Shopping
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- ==========================
+        FOOTER
+========================== -->
+
+<footer>
+
+<div class="footer-content">
+
+<h3>
+
+☕ Brew Haven
+
+</h3>
+
+<p>
+
+Fresh Coffee • Fresh Food • Fast Delivery
+
+</p>
+
+<p>
+
+© 2026 Brew Haven. All Rights Reserved.
+
+</p>
+
+</div>
+
+</footer>
+
+<!-- ==========================
+      LOADING OVERLAY
+========================== -->
+
+<div
+id="loadingOverlay"
+class="loading-overlay"
+style="display:none;">
+
+<div class="loader"></div>
+
+<p>
+
+Updating Cart...
+
+</p>
+
+</div>
+
+<!-- ==========================
+      REMOVE CONFIRM MODAL
+========================== -->
+
+<div
+id="removeModal"
+class="remove-modal"
+style="display:none;">
+
+<div class="remove-box">
+
+<h3>
+
+Remove Product?
+
+</h3>
+
+<p>
+
+Are you sure you want to remove this product from your cart?
+
+</p>
+
+<div class="remove-actions">
+
+<button
+id="cancelRemove"
+class="cancel-btn">
+
+Cancel
+
+</button>
+
+<button
+id="confirmRemove"
+class="confirm-btn">
+
+Remove
 
 </button>
 
 </div>
 
-</section>
-<div id="emptyCart" class="empty-cart" style="display:none;">
-
-    <img
-    src="images/icons/empty-cart.png"
-    alt="Empty Cart">
-
-    <h2>Your Cart is Empty</h2>
-
-    <p>
-
-        Looks like you haven't added anything yet.
-
-    </p>
-
-    <a href="menu.html">
-
-        <button>
-
-            ☕ Explore Menu
-
-        </button>
-
-    </a>
+</div>
 
 </div>
 
-<div id="loginRequired" class="empty-cart" style="display:none;">
+<!-- ==========================
+      TOAST MESSAGE
+========================== -->
 
-    <h2>
+<div
+id="toast"
+class="toast">
 
-        🔒 Login Required
-
-    </h2>
-
-    <p>
-
-        Please login to view your cart.
-
-    </p>
-
-    <a href="customer-login.html?redirect=cart">
-
-        <button>
-
-            👤 Login
-
-        </button>
-
-    </a>
+Product Updated
 
 </div>
 
-<footer>
-
-<p>
-
-© 2026 Brew Haven Café. All Rights Reserved.
-
-</p>
-
-</footer>
+<!-- ==========================
+      JAVASCRIPT
+========================== -->
 
 <script type="module" src="js/cart.js"></script>
 
