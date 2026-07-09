@@ -13,7 +13,8 @@ content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet"
 href="css/checkout.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
 rel="stylesheet">
 
 </head>
@@ -34,7 +35,8 @@ rel="stylesheet">
 
 </div>
 
-<a href="cart.html"
+<a
+href="cart.html"
 class="back-btn">
 
 ← Back To Cart
@@ -46,7 +48,7 @@ class="back-btn">
 </header>
 
 <!-- ==========================
-      CHECKOUT SECTION
+      CHECKOUT PAGE
 ========================== -->
 
 <section class="checkout-page">
@@ -54,10 +56,10 @@ class="back-btn">
 <div class="checkout-container">
 
 <!-- ==========================
-      CUSTOMER DETAILS
+      LEFT SIDE
 ========================== -->
 
-<div class="customer-box">
+<div class="checkout-left">
 
 <h2>
 
@@ -76,13 +78,9 @@ Full Name
 </label>
 
 <input
-
 type="text"
-
 id="customerName"
-
 placeholder="Enter your full name"
-
 required>
 
 </div>
@@ -96,13 +94,25 @@ Phone Number
 </label>
 
 <input
-
 type="tel"
-
 id="customerPhone"
-
 placeholder="Enter phone number"
+required>
 
+</div>
+
+<div class="input-group">
+
+<label>
+
+Email
+
+</label>
+
+<input
+type="email"
+id="customerEmail"
+placeholder="Enter email address"
 required>
 
 </div>
@@ -116,16 +126,44 @@ Delivery Address
 </label>
 
 <textarea
-
 id="customerAddress"
-
-rows="5"
-
+rows="4"
 placeholder="Enter complete address"
-
 required>
 
 </textarea>
+
+</div>
+
+<div class="input-group">
+
+<label>
+
+City
+
+</label>
+
+<input
+type="text"
+id="customerCity"
+placeholder="Enter city"
+required>
+
+</div>
+
+<div class="input-group">
+
+<label>
+
+Pincode
+
+</label>
+
+<input
+type="number"
+id="customerPincode"
+placeholder="Enter pincode"
+required>
 
 </div>
 
@@ -145,7 +183,7 @@ Cash On Delivery
 
 </option>
 
-<option value="ONLINE">
+<option value="ONLINE" disabled>
 
 Online Payment (Coming Soon)
 
@@ -158,3 +196,171 @@ Online Payment (Coming Soon)
 </form>
 
 </div>
+<!-- ==========================
+      RIGHT SIDE
+========================== -->
+
+<div class="checkout-right">
+
+<h2>
+
+Order Summary
+
+</h2>
+
+<div
+id="checkoutItems"
+class="checkout-items">
+
+<!-- Products Loaded By JS -->
+
+</div>
+
+<div class="summary-box">
+
+<div class="summary-row">
+
+<span>
+
+Total Items
+
+</span>
+
+<b id="totalItems">
+
+0
+
+</b>
+
+</div>
+
+<div class="summary-row">
+
+<span>
+
+Subtotal
+
+</span>
+
+<b id="subtotal">
+
+₹0
+
+</b>
+
+</div>
+
+<div class="summary-row">
+
+<span>
+
+Delivery Charge
+
+</span>
+
+<b id="deliveryCharge">
+
+₹40
+
+</b>
+
+</div>
+
+<div class="summary-row grand-total">
+
+<span>
+
+Grand Total
+
+</span>
+
+<b id="grandTotal">
+
+₹40
+
+</b>
+
+</div>
+
+<button
+id="placeOrderBtn"
+class="place-order">
+
+🛍 Place Order
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ==========================
+        LOADING
+========================== -->
+
+<div
+id="loadingOverlay"
+class="loading-overlay"
+style="display:none;">
+
+<div class="loader"></div>
+
+<p>
+
+Placing Your Order...
+
+</p>
+
+</div>
+
+<!-- ==========================
+        TOAST
+========================== -->
+
+<div
+id="toast"
+class="toast">
+
+Order Placed
+
+</div>
+
+<!-- ==========================
+        FOOTER
+========================== -->
+
+<footer>
+
+<h3>
+
+☕ Brew Haven
+
+</h3>
+
+<p>
+
+Fresh Coffee • Fresh Food • Fast Delivery
+
+</p>
+
+<p>
+
+© 2026 Brew Haven. All Rights Reserved.
+
+</p>
+
+</footer>
+
+<!-- ==========================
+      JAVASCRIPT
+========================== -->
+
+<script type="module" src="js/checkout.js"></script>
+
+</body>
+
+</html>
