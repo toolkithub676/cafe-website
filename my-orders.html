@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Orders | Brew Haven</title>
+
+<link rel="stylesheet"
+href="css/my-orders.css">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ==========================
+        NAVBAR
+========================== -->
+
+<header>
+
+<nav class="navbar">
+
+<div class="logo">
+
+☕ Brew Haven
+
+</div>
+
+<div class="nav-actions">
+
+<a
+href="index.html"
+class="back-btn">
+
+🏠 Home
+
+</a>
+
+<a
+href="cart.html"
+class="cart-btn">
+
+🛒 Cart
+
+</a>
+
+</div>
+
+</nav>
+
+</header>
+
+<!-- ==========================
+      MY ORDERS
+========================== -->
+
+<section class="orders-page">
+
+<div class="orders-container">
+
+<div class="orders-header">
+
+<h2>
+
+📦 My Orders
+
+</h2>
+
+<p>
+
+Track all your food orders in one place.
+
+</p>
+
+</div>
+
+<!-- ==========================
+      EMPTY ORDERS
+========================== -->
+
+<div
+
+id="emptyOrders"
+
+class="empty-orders"
+
+style="display:none;">
+
+<img
+
+src="images/empty-orders.png"
+
+alt="No Orders">
+
+<h3>
+
+No Orders Found
+
+</h3>
+
+<p>
+
+You haven't placed any orders yet.
+
+</p>
+
+<a
+
+href="index.html"
+
+class="shop-btn">
+
+Order Now
+
+</a>
+
+</div>
+
+<!-- ==========================
+      ORDERS LIST
+========================== -->
+
+<div
+
+id="ordersContainer"
+
+class="orders-list">
+
+<!-- Orders Loaded By JS -->
+
+</div>
+  <!-- ==========================
+      LOADING OVERLAY
+========================== -->
+
+<div
+id="loadingOverlay"
+class="loading-overlay"
+style="display:none;">
+
+<div class="loader"></div>
+
+<p>
+
+Loading Orders...
+
+</p>
+
+</div>
+
+<!-- ==========================
+      TOAST
+========================== -->
+
+<div
+id="toast"
+class="toast">
+
+Order Updated
+
+</div>
+
+<!-- ==========================
+        FOOTER
+========================== -->
+
+<footer>
+
+<h3>
+
+☕ Brew Haven
+
+</h3>
+
+<p>
+
+Fresh Coffee • Fresh Food • Fast Delivery
+
+</p>
+
+<p>
+
+© 2026 Brew Haven. All Rights Reserved.
+
+</p>
+
+</footer>
+
+<!-- ==========================
+      JAVASCRIPT
+========================== -->
+
+<script
+type="module"
+src="js/my-orders.js">
+
+</script>
+
+</body>
+
+</html>
