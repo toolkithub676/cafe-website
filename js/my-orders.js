@@ -1,7 +1,7 @@
 /*
 ====================================
 Brew Haven
-My Orders JS V3
+My Orders JS V4
 PART 1 / 4
 ====================================
 */
@@ -58,7 +58,7 @@ return;
 
 }
 
-currentUser = user;
+currentUser=user;
 
 await loadOrders();
 
@@ -86,7 +86,7 @@ loadingOverlay.style.display="none";
 
 function showToast(message){
 
-toast.innerHTML = message;
+toast.textContent=message;
 
 toast.classList.add("show");
 
@@ -108,7 +108,7 @@ showLoading();
 
 try{
 
-const q = query(
+const q=query(
 
 collection(db,"orders"),
 
@@ -132,11 +132,11 @@ orderBy(
 
 );
 
-const snapshot =
+const snapshot=
 
 await getDocs(q);
 
-orders = [];
+orders=[];
 
 snapshot.forEach(doc=>{
 
@@ -171,7 +171,7 @@ hideLoading();
 
 function renderOrders(){
 
-ordersContainer.innerHTML = "";
+ordersContainer.innerHTML="";
 
 if(orders.length===0){
 
@@ -187,13 +187,9 @@ emptyOrders.style.display="none";
 
 orders.forEach(order=>{
 
-const status =
+const status=(order.status || "Pending").toLowerCase();
 
-(order.status || "Pending")
-
-.toLowerCase();
-
-const orderDate =
+const orderDate=
 
 order.createdAt?.toDate
 
@@ -201,33 +197,55 @@ order.createdAt?.toDate
 
 : "Just Now";
 
-ordersContainer.innerHTML += `
+let productsHTML="";
+
+(order.products || []).forEach(product=>{
+
+productsHTML+=`
+
+<div class="order-product">
+
+<span class="product-name">
+
+• ${product.name}
+
+</span>
+
+<span class="product-qty">
+
+×${product.quantity}
+
+</span>
+
+</div>
+
+`;
+
+});
+
+ordersContainer.innerHTML+=`
 
 <div class="order-card">
 
 <div class="order-header">
 
+<div>
+
 <div class="order-id">
 
-<h3>
-
-Order #${order.id.slice(0,8)}
-
-</h3>
-
-<p>
-
-${orderDate}
-
-</p>
+📦 Order #${order.id.slice(0,8)}
 
 </div>
 
-<div>
+<div class="order-date">
 
-<span
+${orderDate}
 
-class="status ${status}">
+</div>
+
+</div>
+
+<span class="status ${status}">
 
 ${order.status || "Pending"}
 
@@ -235,154 +253,136 @@ ${order.status || "Pending"}
 
 </div>
 
-</div>
+<div class="order-products">
 
-<div
-
-class="order-products"
-
-id="products-${order.id}">
+${productsHTML}
 
 </div>
+
+<div class="order-footer">
 
 <div class="order-total">
 
-<span>
-
-Grand Total
-
-</span>
-
-<b>
-
 ₹${order.grandTotal}
 
-</b>
+</div>
+
+${status==="pending"
+
+?
+
+`<button
+class="cancel-order"
+onclick="cancelOrder('${order.id}')">
+
+❌ Cancel
+
+</button>`
+
+:
+
+""
+
+}
 
 </div>
 
 </div>
 
 `;
-
-const productContainer =
-
-document.getElementById(
-
-`products-${order.id}`
-
-);
-
-(order.products || []).forEach(item=>{
-
-productContainer.innerHTML += `
-
-<div class="order-product">
-
-<img
-
-src="${item.image}"
-
-alt="${item.name}">
-
-<div class="product-info">
-
-<h4>
-
-${item.name}
-
-</h4>
-
-<p>
-
-Qty : ${item.quantity}
-
-</p>
-
-<p>
-
-₹${item.price}
-
-</p>
-
-<p>
-
-⏱ ${item.preparationTime} mins
-
-</p>
-
-</div>
-
-</div>
-
-`;
-
-});
 
 });
 
 }
 /* ==========================
-      STATUS HELPERS
+      CANCEL ORDER
 ========================== */
 
-function getStatusColor(status){
+window.cancelOrder = async(orderId)=>{
 
-switch((status || "").toLowerCase()){
+const order = orders.find(
 
-case "pending":
-return "#FFC107";
+item=>item.id===orderId
 
-case "accepted":
-return "#2196F3";
+);
 
-case "preparing":
-return "#FF9800";
+if(!order){
 
-case "ready":
-return "#4CAF50";
+showToast("Order not found.");
 
-case "delivered":
-return "#2E7D32";
-
-case "cancelled":
-return "#E53935";
-
-default:
-return "#777";
+return;
 
 }
 
-}
+if(
 
-function getStatusMessage(status){
+(order.status || "").toLowerCase() !== "pending"
 
-switch((status || "").toLowerCase()){
+){
 
-case "pending":
-return "Your order is waiting for café confirmation.";
+showToast(
 
-case "accepted":
-return "Your order has been accepted.";
+"Only pending orders can be cancelled."
 
-case "preparing":
-return "Your food is being prepared.";
+);
 
-case "ready":
-return "Your order is ready.";
-
-case "delivered":
-return "Order delivered successfully.";
-
-case "cancelled":
-return "Order has been cancelled.";
-
-default:
-return "";
+return;
 
 }
 
+const ok = confirm(
+
+"Are you sure you want to cancel this order?"
+
+);
+
+if(!ok) return;
+
+showLoading();
+
+try{
+
+const {
+
+doc,
+
+updateDoc
+
+} = await import(
+
+"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"
+
+);
+
+await updateDoc(
+
+doc(db,"orders",orderId),
+
+{
+
+status:"Cancelled"
+
 }
+
+);
+
+showToast("Order Cancelled");
+
+await loadOrders();
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(error.message);
+
+}
+
+hideLoading();
+
+};
 
 /* ==========================
       AUTO REFRESH
@@ -424,117 +424,19 @@ return orders;
 
 };
 
+window.getLatestOrder = ()=>{
+
+return orders.length ? orders[0] : null;
+
+};
+
 window.getOrderCount = ()=>{
 
 return orders.length;
 
 };
-
-window.getLatestOrder = ()=>{
-
-if(orders.length===0){
-
-return null;
-
-}
-
-return orders[0];
-
-};
 /* ==========================
-      CANCEL ORDER
-========================== */
-
-window.cancelOrder = async(orderId)=>{
-
-const order = orders.find(
-
-item=>item.id===orderId
-
-);
-
-if(!order){
-
-showToast("Order not found.");
-
-return;
-
-}
-
-if(
-
-(order.status || "").toLowerCase()!=="pending"
-
-){
-
-showToast(
-
-"Only pending orders can be cancelled."
-
-);
-
-return;
-
-}
-
-const ok = confirm(
-
-"Cancel this order?"
-
-);
-
-if(!ok) return;
-
-try{
-
-const { doc, updateDoc } = await import(
-
-"https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"
-
-);
-
-await updateDoc(
-
-doc(db,"orders",orderId),
-
-{
-
-status:"Cancelled"
-
-}
-
-);
-
-showToast(
-
-"Order Cancelled"
-
-);
-
-await loadOrders();
-
-}
-
-catch(error){
-
-console.error(error);
-
-alert(error.message);
-
-}
-
-};
-
-/* ==========================
-      GLOBAL FUNCTIONS
-========================== */
-
-window.showToast = showToast;
-
-window.loadOrders = loadOrders;
-
-/* ==========================
-      PAGE READY
+      PAGE VISIBILITY
 ========================== */
 
 document.addEventListener(
@@ -554,6 +456,72 @@ currentUser
 await loadOrders();
 
 }
+
+});
+
+/* ==========================
+      PAGE FOCUS
+========================== */
+
+window.addEventListener(
+
+"focus",
+
+async()=>{
+
+if(currentUser){
+
+await loadOrders();
+
+}
+
+});
+
+/* ==========================
+      GLOBAL FUNCTIONS
+========================== */
+
+window.showToast = showToast;
+
+window.loadOrders = loadOrders;
+
+window.refreshOrders = async()=>{
+
+if(currentUser){
+
+await loadOrders();
+
+showToast("Orders Refreshed");
+
+}
+
+};
+
+/* ==========================
+      STATUS CHECK
+========================== */
+
+window.isPending = (status)=>{
+
+return (status || "").toLowerCase() === "pending";
+
+};
+
+/* ==========================
+      PAGE READY
+========================== */
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+console.log(
+
+"My Orders V4 Loaded Successfully"
+
+);
 
 });
 
