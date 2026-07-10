@@ -1,7 +1,7 @@
 /*
 ====================================
 Brew Haven
-My Orders CSS V3
+My Orders CSS V4
 PART 1 / 3
 ====================================
 */
@@ -18,9 +18,13 @@ html{
 }
 
 body{
-    background:#f6f6f6;
+
+    background:#f5f5f5;
+
     color:#222;
+
     overflow-x:hidden;
+
 }
 
 /* ==========================
@@ -63,7 +67,7 @@ body{
 
 }
 
-.nav-actions{
+.nav-buttons{
 
     display:flex;
 
@@ -71,7 +75,7 @@ body{
 
 }
 
-.back-btn,
+.home-btn,
 
 .cart-btn{
 
@@ -89,13 +93,13 @@ body{
 
 }
 
-.back-btn{
+.home-btn{
 
     background:#6F4E37;
 
 }
 
-.back-btn:hover{
+.home-btn:hover{
 
     background:#8B5E3C;
 
@@ -114,18 +118,18 @@ body{
 }
 
 /* ==========================
-      ORDERS PAGE
+      PAGE
 ========================== */
 
 .orders-page{
 
-    padding:40px 6%;
+    padding:30px 6%;
 
 }
 
 .orders-container{
 
-    max-width:1450px;
+    max-width:1200px;
 
     margin:auto;
 
@@ -133,17 +137,17 @@ body{
 
 .orders-header{
 
-    margin-bottom:30px;
+    margin-bottom:25px;
 
 }
 
-.orders-header h2{
+.orders-header h1{
 
     color:#3E2723;
 
-    font-size:34px;
+    font-size:32px;
 
-    margin-bottom:8px;
+    margin-bottom:6px;
 
 }
 
@@ -151,43 +155,31 @@ body{
 
     color:#666;
 
-    font-size:16px;
+    font-size:15px;
 
 }
 
 /* ==========================
-      EMPTY ORDERS
+      EMPTY
 ========================== */
 
 .empty-orders{
 
     background:#fff;
 
-    border-radius:18px;
+    border-radius:16px;
 
-    padding:50px 25px;
+    padding:45px 25px;
 
     text-align:center;
 
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
 
 }
 
-.empty-orders img{
-
-    width:220px;
-
-    max-width:100%;
-
-    margin-bottom:20px;
-
-}
-
-.empty-orders h3{
+.empty-orders h2{
 
     color:#3E2723;
-
-    font-size:28px;
 
     margin-bottom:10px;
 
@@ -197,9 +189,7 @@ body{
 
     color:#666;
 
-    margin-bottom:25px;
-
-    line-height:1.7;
+    margin-bottom:20px;
 
 }
 
@@ -213,9 +203,9 @@ body{
 
     color:#fff;
 
-    padding:14px 24px;
+    padding:12px 22px;
 
-    border-radius:10px;
+    border-radius:8px;
 
     transition:.3s;
 
@@ -226,6 +216,7 @@ body{
     background:#6F4E37;
 
 }
+
 /* ==========================
       ORDERS LIST
 ========================== */
@@ -236,38 +227,39 @@ body{
 
     flex-direction:column;
 
-    gap:25px;
+    gap:12px;
 
 }
-
 /* ==========================
-      ORDER CARD
+      COMPACT ORDER CARD
 ========================== */
 
 .order-card{
 
     background:#fff;
 
-    border-radius:18px;
+    border-radius:12px;
 
-    padding:25px;
+    padding:14px 16px;
 
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
 
-    transition:.3s;
+    border-left:5px solid #6F4E37;
+
+    transition:.25s;
 
 }
 
 .order-card:hover{
 
-    transform:translateY(-4px);
+    transform:translateY(-2px);
 
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    box-shadow:0 8px 18px rgba(0,0,0,.12);
 
 }
 
 /* ==========================
-      ORDER HEADER
+      HEADER
 ========================== */
 
 .order-header{
@@ -278,89 +270,95 @@ body{
 
     align-items:center;
 
-    flex-wrap:wrap;
+    gap:10px;
 
-    gap:15px;
-
-    padding-bottom:18px;
-
-    border-bottom:2px solid #f0f0f0;
-
-    margin-bottom:20px;
+    margin-bottom:8px;
 
 }
 
-.order-id h3{
+.order-id{
+
+    font-size:16px;
+
+    font-weight:700;
 
     color:#3E2723;
 
-    font-size:22px;
-
-    margin-bottom:6px;
-
 }
 
-.order-id p{
+.order-date{
+
+    font-size:12px;
 
     color:#777;
 
-    font-size:14px;
+    margin-top:3px;
 
 }
 
 /* ==========================
-      STATUS BADGES
+      STATUS
 ========================== */
 
 .status{
 
-    padding:8px 18px;
+    padding:5px 12px;
 
-    border-radius:30px;
+    border-radius:20px;
 
-    font-size:14px;
+    font-size:12px;
 
     font-weight:600;
 
-    color:#fff;
+    white-space:nowrap;
 
 }
 
 .status.pending{
 
-    background:#FFC107;
+    background:#FFF3CD;
 
-    color:#222;
+    color:#856404;
 
 }
 
 .status.accepted{
 
-    background:#2196F3;
+    background:#D1ECF1;
+
+    color:#0C5460;
 
 }
 
 .status.preparing{
 
-    background:#FF9800;
+    background:#FFE5B4;
+
+    color:#9C5700;
 
 }
 
 .status.ready{
 
-    background:#4CAF50;
+    background:#D4EDDA;
+
+    color:#155724;
 
 }
 
 .status.delivered{
 
-    background:#2E7D32;
+    background:#C8E6C9;
+
+    color:#1B5E20;
 
 }
 
 .status.cancelled{
 
-    background:#E53935;
+    background:#F8D7DA;
+
+    color:#721C24;
 
 }
 
@@ -370,11 +368,9 @@ body{
 
 .order-products{
 
-    display:flex;
+    margin:8px 0;
 
-    flex-direction:column;
-
-    gap:15px;
+    padding-left:8px;
 
 }
 
@@ -382,71 +378,45 @@ body{
 
     display:flex;
 
-    gap:15px;
+    justify-content:space-between;
 
     align-items:center;
 
-    background:#fafafa;
+    gap:10px;
 
-    border:1px solid #eee;
-
-    border-radius:12px;
-
-    padding:12px;
-
-}
-
-.order-product img{
-
-    width:85px;
-
-    height:85px;
-
-    object-fit:cover;
-
-    border-radius:10px;
-
-    flex-shrink:0;
-
-}
-
-.product-info{
-
-    flex:1;
-
-}
-
-.product-info h4{
-
-    color:#3E2723;
-
-    font-size:17px;
-
-    margin-bottom:6px;
-
-}
-
-.product-info p{
-
-    color:#666;
+    padding:3px 0;
 
     font-size:14px;
 
-    margin-bottom:4px;
+    color:#444;
+
+}
+
+.product-name{
+
+    flex:1;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+}
+
+.product-qty{
+
+    font-weight:600;
+
+    color:#3E2723;
 
 }
 
 /* ==========================
-      ORDER TOTAL
+      FOOTER
 ========================== */
 
-.order-total{
-
-    margin-top:20px;
-
-    padding-top:18px;
-
-    border-top:2px solid #f0f0f0;
+.order-footer{
 
     display:flex;
 
@@ -454,23 +424,49 @@ body{
 
     align-items:center;
 
-    font-size:18px;
+    margin-top:10px;
 
-    font-weight:600;
+    padding-top:10px;
 
-}
-
-.order-total span{
-
-    color:#555;
+    border-top:1px dashed #ddd;
 
 }
 
-.order-total b{
+.order-total{
+
+    font-size:17px;
+
+    font-weight:700;
 
     color:#3E2723;
 
-    font-size:22px;
+}
+
+.cancel-order{
+
+    border:none;
+
+    background:#E53935;
+
+    color:#fff;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.cancel-order:hover{
+
+    background:#C62828;
 
 }
 /* ==========================
@@ -481,21 +477,13 @@ body{
 
 .orders-page{
 
-    padding:30px 20px;
+    padding:25px 20px;
 
 }
 
 .order-card{
 
-    padding:20px;
-
-}
-
-.order-product img{
-
-    width:75px;
-
-    height:75px;
+    padding:14px;
 
 }
 
@@ -519,13 +507,13 @@ body{
 
 }
 
-.nav-actions{
+.nav-buttons{
 
     gap:8px;
 
 }
 
-.back-btn,
+.home-btn,
 
 .cart-btn{
 
@@ -537,111 +525,87 @@ body{
 
 .orders-page{
 
-    padding:15px;
+    padding:12px;
 
 }
 
-.orders-header h2{
+.orders-header h1{
 
-    font-size:26px;
+    font-size:24px;
 
 }
 
 .orders-header p{
 
-    font-size:14px;
+    font-size:13px;
 
 }
 
 .order-card{
 
-    padding:16px;
+    padding:12px;
 
-    border-radius:12px;
+    border-radius:10px;
 
 }
 
 .order-header{
 
-    flex-direction:column;
-
     align-items:flex-start;
-
-    gap:12px;
 
 }
 
-.order-id h3{
+.order-id{
 
-    font-size:18px;
+    font-size:15px;
+
+}
+
+.order-date{
+
+    font-size:11px;
+
+}
+
+.status{
+
+    font-size:11px;
+
+    padding:4px 10px;
 
 }
 
 .order-product{
 
-    flex-direction:column;
-
-    align-items:flex-start;
-
-}
-
-.order-product img{
-
-    width:100%;
-
-    height:180px;
-
-}
-
-.product-info{
-
-    width:100%;
-
-}
-
-.product-info h4{
-
-    font-size:16px;
-
-}
-
-.product-info p{
-
     font-size:13px;
+
+}
+
+.order-footer{
+
+    margin-top:8px;
+
+    padding-top:8px;
 
 }
 
 .order-total{
 
-    flex-direction:column;
-
-    align-items:flex-start;
-
-    gap:8px;
+    font-size:16px;
 
 }
 
-.order-total b{
+.cancel-order{
 
-    font-size:20px;
+    padding:7px 12px;
+
+    font-size:12px;
 
 }
 
 .empty-orders{
 
     padding:35px 18px;
-
-}
-
-.empty-orders img{
-
-    width:170px;
-
-}
-
-.empty-orders h3{
-
-    font-size:22px;
 
 }
 
@@ -661,11 +625,11 @@ body{
 
     display:flex;
 
-    flex-direction:column;
-
     justify-content:center;
 
     align-items:center;
+
+    flex-direction:column;
 
     z-index:99999;
 
@@ -673,29 +637,27 @@ body{
 
 .loader{
 
-    width:55px;
+    width:50px;
 
-    height:55px;
+    height:50px;
 
-    border:6px solid #fff;
+    border:5px solid #fff;
 
-    border-top:6px solid #6F4E37;
+    border-top:5px solid #6F4E37;
 
     border-radius:50%;
 
     animation:spin 1s linear infinite;
 
-    margin-bottom:18px;
-
 }
 
 .loading-overlay p{
 
+    margin-top:15px;
+
     color:#fff;
 
-    font-size:18px;
-
-    font-weight:600;
+    font-size:16px;
 
 }
 
@@ -709,7 +671,7 @@ body{
 
     left:50%;
 
-    bottom:25px;
+    bottom:20px;
 
     transform:translateX(-50%);
 
@@ -717,11 +679,11 @@ body{
 
     color:#fff;
 
-    padding:14px 24px;
+    padding:12px 20px;
 
     border-radius:8px;
 
-    font-size:15px;
+    font-size:14px;
 
     opacity:0;
 
@@ -737,7 +699,7 @@ body{
 
     opacity:1;
 
-    bottom:40px;
+    bottom:35px;
 
 }
 
@@ -747,7 +709,7 @@ body{
 
 footer{
 
-    margin-top:60px;
+    margin-top:40px;
 
     background:#3E2723;
 
@@ -755,15 +717,15 @@ footer{
 
     text-align:center;
 
-    padding:35px 20px;
+    padding:30px 20px;
 
 }
 
 footer h3{
 
-    font-size:24px;
+    font-size:22px;
 
-    margin-bottom:10px;
+    margin-bottom:8px;
 
 }
 
@@ -771,9 +733,9 @@ footer p{
 
     color:#ddd;
 
-    line-height:1.8;
+    font-size:14px;
 
-    font-size:15px;
+    line-height:1.7;
 
 }
 
@@ -803,7 +765,7 @@ from{
 
 opacity:0;
 
-transform:translateY(20px);
+transform:translateY(12px);
 
 }
 
@@ -819,25 +781,13 @@ transform:translateY(0);
 
 .order-card{
 
-    animation:fadeUp .4s ease;
+    animation:fadeUp .25s ease;
 
 }
 
 button{
 
-    transition:.3s;
-
-}
-
-img{
-
-    transition:.35s;
-
-}
-
-.order-product:hover img{
-
-    transform:scale(1.03);
+    transition:.25s;
 
 }
 
@@ -852,3 +802,4 @@ html{
 END OF FILE
 ====================================
 */
+
