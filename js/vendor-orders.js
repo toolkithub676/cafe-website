@@ -111,27 +111,8 @@ showLoading();
 try{
 
 const q = query(
-
 collection(db,"orders"),
-
-where(
-
-"vendorId",
-
-"==",
-
-currentUser.uid
-
-),
-
-orderBy(
-
-"createdAt",
-
-"desc"
-
-)
-
+where("vendorId","==",currentUser.uid)
 );
 
 const snapshot = await getDocs(q);
